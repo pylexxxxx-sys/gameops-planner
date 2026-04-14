@@ -416,6 +416,22 @@ const GAME_ANALYSIS = {
         { dimension: "新手体验", us: "极高门槛", them: "前期流畅(后期逼付费)", advantage: "them" }
       ],
       communityLeverage: "核心策略：Lost Ark是「P2W如何杀死好游戏」的最佳反面教材。PoE2的纯装饰付费是与之形成最强对比的武器。打法：1)在Lost Ark每次P2W争议爆发时,社区顺势传播PoE2的公平付费;2)Lost Ark流失的大量韩服/欧美ARPG玩家正在寻找替代品,他们对「公平+深度」有极强渴求;3)制作「PoE2 vs Lost Ark 付费模式对比」信息图让社区自传播。社区话术：「在PoE2,你的装备=你的时间投入,不是你的信用卡。」"
+    },
+    {
+      name: "火炬之光:无限 (Torchlight Infinite)",
+      icon: "🔥",
+      positioning: "XD出品的移动端+PC跨端ARPG，赛季制运营，F2P+Battle Pass，月营收$20万级，Steam峰值低",
+      comparison: [
+        { dimension: "商业模式", us: "F2P + 纯装饰MTX", them: "F2P + Battle Pass + 抽英雄/特质(有P2W争议)", advantage: "us" },
+        { dimension: "Build深度", us: "1500+天赋节点 + 宝石系统", them: "6英雄 × 特质系统(有深度但远不及PoE)", advantage: "us" },
+        { dimension: "赛季内容量", us: "每3月全新机制+终局系统", them: "每赛季新英雄+新特质(内容量较薄)", advantage: "us" },
+        { dimension: "画面品质", us: "暗黑哥特(PC级)", them: "卡通风(移动端优先)", advantage: "us" },
+        { dimension: "玩家基数", us: "Steam峰值500K+", them: "Steam峰值~5K(极小)", advantage: "us" },
+        { dimension: "移动端", us: "纯PC", them: "PC+Mobile跨端(移动端是主阵地)", advantage: "them" },
+        { dimension: "上手友好度", us: "极高门槛", them: "引导完善,适合手游玩家", advantage: "them" },
+        { dimension: "亚洲市场", us: "需要版号/代理", them: "中国/东南亚已上线运营", advantage: "them" }
+      ],
+      communityLeverage: "核心策略：火炬之光无限是PoE2在移动端/亚洲市场的潜在威胁——它已经在中国和东南亚跑通了赛季制ARPG的手游化。但它的致命弱点是:Build深度远不及PoE2,画面偏卡通,核心ARPG玩家不满足。打法：1)不直接攻击,而是用「深度对比」让火炬玩家意识到PoE2的系统深度是另一个量级;2)火炬之光的赛季运营经验可以反向学习——它证明了移动端ARPG赛季制可行;3)如果PoE2未来做Mobile端,火炬之光的用户就是精准目标。社区话术：「如果火炬之光让你入门了ARPG,PoE2会让你真正沉迷。」"
     }
   ],
 
