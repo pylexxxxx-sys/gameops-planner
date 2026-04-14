@@ -116,6 +116,25 @@
 
         <button class="btn-primary" onclick="generatePlan()">⚡ 生成运营规划蓝图</button>
 
+        <!-- AI Analysis Section -->
+        <div class="ai-section">
+          <div class="ai-section-header">
+            <span class="term-prompt">$</span> <strong>AI 智能分析</strong> <span class="ai-badge">Claude API</span>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>🔑 API KEY (存在本地，不上传)</label>
+            <input class="form-input" id="apiKeyInput" type="password" placeholder="sk-ant-api03-..." value="">
+            <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">Key 仅存储在你的浏览器 localStorage 中，刷新不丢</div>
+          </div>
+          <button class="btn-ai" onclick="aiGeneratePlan()">
+            <span class="ai-icon">🤖</span> AI 自动生成完整分析
+          </button>
+          <div class="ai-status" id="aiStatus" style="display:none;">
+            <div class="ai-spinner"></div>
+            <span id="aiStatusText">正在分析中...</span>
+          </div>
+        </div>
+
         <div class="preset-hint">
           💡 <strong>快速体验：</strong>选择预设项目直接查看完整 Demo
           <button class="preset-btn" onclick="loadPoe2Preset()">⚔️ PoE2</button>

@@ -59,6 +59,305 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+// ═══════════════════════════════════════════════════════════════
+// AI ANALYSIS — Claude API Integration
+// ═══════════════════════════════════════════════════════════════
+
+// Load saved API key
+(function() {
+  const saved = localStorage.getItem('gameops_api_key');
+  if (saved) document.getElementById('apiKeyInput').value = saved;
+})();
+
+function getApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (key) localStorage.setItem('gameops_api_key', key);
+  return key;
+}
+
+function showAiStatus(msg, show = true) {
+  const el = document.getElementById('aiStatus');
+  const txt = document.getElementById('aiStatusText');
+  el.style.display = show ? 'flex' : 'none';
+  if (txt) txt.textContent = msg;
+}
+
+async function aiGeneratePlan() {
+  const apiKey = getApiKey();
+  if (!apiKey) { alert('请先填入 Claude API Key'); return; }
+
+  const gameName = document.getElementById('projectName').value.trim();
+  if (!gameName) { alert('请先填写项目名称'); return; }
+
+  const genres = [...document.querySelectorAll('#genreSelector .tag-btn.selected')].map(b => b.dataset.value);
+  const arts = [...document.querySelectorAll('#artSelector .tag-btn.selected')].map(b => b.dataset.value);
+  const markets = [...document.querySelectorAll('#marketSelector .tag-btn.selected')].map(b => b.dataset.value);
+  const phaseBtn = document.querySelector('#phaseSelector .tag-btn.selected');
+  const phase = phaseBtn ? phaseBtn.dataset.value : 'cbt';
+
+  showAiStatus('正在连接 Claude API...');
+
+  const systemPrompt = `你是一个游戏发行运营专家。用户会给你一个游戏的名称和基本信息。你需要生成一份完整的游戏运营分析数据，严格按照以下JSON格式输出（不要输出其他任何内容，只输出纯JSON）。
+
+JSON结构如下：
+{
+  "projectData": {
+    "name": "游戏名",
+    "tags": ["标签1", "标签2", "标签3", "标签4", "标签5"],
+    "phases": {
+      "cbt": {
+        "title": "CBT 封闭测试",
+        "duration": "周期",
+        "objective": "核心目标",
+        "cards": [
+          {"id":"c1","type":"event/campaign/tvc/kv/ua/aigc","title":"标题","desc":"描述(50-100字)","priority":"high/mid/low","tags":["标签"],"timing":"排期","refCount":3,"role":{"community":true,"ua":false,"visual":false}}
+        ]
+      },
+      "ea": { "title":"EA 抢先体验", "duration":"", "objective":"", "cards":[] },
+      "soft": { "title":"Soft Launch", "duration":"", "objective":"", "cards":[] },
+      "global": { "title":"Global Launch", "duration":"", "objective":"", "cards":[] }
+    }
+  },
+  "analysis": {
+    "coreFeatures": [
+      {"icon":"emoji","title":"特点名","desc":"描述(50-80字)","marketingAngle":"营销切入点(50-80字)","tags":["标签"]}
+    ],
+    "competitors": [
+      {"name":"竞品名","icon":"emoji","positioning":"一句话定位","comparison":[
+        {"dimension":"维度","us":"我方","them":"对方","advantage":"us/them/tie"}
+      ],"communityLeverage":"社群撬动策略(100-150字)"}
+    ],
+    "communityStrategies": [
+      {"icon":"emoji","title":"策略名","problem":"问题","solution":"策略","actions":["动作1","动作2","动作3","动作4"],"kpi":"目标:xxx"}
+    ]
+  },
+  "audience": {
+    "funnel": {"core":"百分比","broad":"百分比","casual":"百分比"},
+    "segments": [
+      {"tier":"core/broad/casual","label":"标签","size":"占比说明","color":"var(--accent-red)/var(--accent-orange)/var(--accent-green)",
+       "portrait":{"who":"","age":"","behavior":"","motivation":"","spend":""},
+       "strategy":[{"action":"动作名","detail":"详细说明"}],
+       "uaApproach":"获客思路","contentStyle":"内容风格"}
+    ]
+  },
+  "regional": [
+    {"region":"区域名","icon":"emoji","playerBase":"","overview":"","keyInsights":["洞察1"],"strategy":[{"action":"","detail":""}],"kpi":"","timing":""}
+  ]
+}
+
+要求：
+1. 每个阶段(cbt/ea/soft/global)至少5张运营卡片
+2. 核心特点至少5个
+3. 竞品至少3个（选该品类最相关的）
+4. 社群策略至少5个
+5. 人群分析三层（核心/泛/非核心）
+6. 区域打法至少3个区域
+7. 所有内容必须基于真实的游戏行业知识
+8. 只输出JSON，不要markdown或其他格式`;
+
+  const userMsg = `游戏名: ${gameName}
+品类: ${genres.join(', ') || '未指定'}
+美术风格: ${arts.join(', ') || '未指定'}
+目标市场: ${markets.join(', ') || '全球'}
+当前节点: ${phase}
+
+请生成完整的运营分析数据(JSON格式)。`;
+
+  try {
+    showAiStatus('Claude 正在分析「' + gameName + '」...');
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 8000,
+        messages: [
+          { role: 'user', content: systemPrompt + '\n\n' + userMsg }
+        ]
+      })
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API错误: ${resp.status}`);
+    }
+
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || '';
+
+    showAiStatus('解析AI返回的数据...');
+
+    // Extract JSON from response
+    let jsonStr = text;
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (jsonMatch) jsonStr = jsonMatch[0];
+
+    const aiResult = JSON.parse(jsonStr);
+
+    // Apply AI data
+    showAiStatus('正在应用到看板...');
+    applyAiResult(aiResult, gameName);
+
+    showAiStatus('✅ AI分析完成！正在加载看板...', true);
+    setTimeout(() => showAiStatus('', false), 2000);
+
+  } catch (err) {
+    showAiStatus('❌ ' + err.message, true);
+    console.error('AI Error:', err);
+  }
+}
+
+function applyAiResult(ai, gameName) {
+  // Set project data
+  currentProjectType = 'ai_' + gameName.replace(/\s+/g, '_').toLowerCase();
+
+  const pd = ai.projectData || {};
+  pd.name = pd.name || gameName;
+  pd.tags = pd.tags || [];
+
+  // Store AI-generated data globally so rendering functions can access them
+  window._AI_DATA = pd;
+  window._AI_ANALYSIS = ai.analysis || {};
+  window._AI_AUDIENCE = ai.audience || {};
+  window._AI_REGIONAL = ai.regional || [];
+  window._AI_DIFF = null; // AI doesn't generate diff map
+  window._AI_REFS = {}; // No refs for AI
+  window._AI_AIGC = {}; // No AIGC for AI
+
+  projectData = pd;
+
+  // Update header
+  document.getElementById('projTitle').textContent = pd.name;
+  document.getElementById('projTags').innerHTML = pd.tags.map(t => `<span class="project-tag">${t}</span>`).join('');
+  document.querySelector('.project-avatar').textContent = '🤖';
+
+  // Switch screens
+  document.getElementById('setupScreen').classList.remove('active');
+  document.getElementById('dashboardScreen').classList.add('active');
+
+  // Hide steam dashboard for AI projects
+  const steamEl = document.getElementById('steamDashboard');
+  if (steamEl) steamEl.style.display = 'none';
+
+  renderGantt();
+  switchPhase('cbt');
+}
+
+// Override data source selectors to support AI-generated data
+const _origRenderAnalysis = renderAnalysis;
+renderAnalysis = function() {
+  if (currentProjectType && currentProjectType.startsWith('ai_')) {
+    const ad = window._AI_ANALYSIS;
+    if (!ad) return;
+    currentCompetitor = 0;
+    currentRegion = 0;
+    if (ad.coreFeatures) renderCoreFeatures(ad);
+    if (ad.competitors) renderCompetitors(ad);
+    if (ad.communityStrategies) renderStrategies(ad);
+    // Skip diff (AI doesn't generate)
+    const diffEl = document.getElementById('diffPositionContent');
+    const pillarsEl = document.getElementById('diffPillarsGrid');
+    if (diffEl) diffEl.innerHTML = '<div style="padding:20px;color:var(--text-muted);font-family:var(--font-mono);text-align:center;">💡 品类差异化地图需要手动补充</div>';
+    if (pillarsEl) pillarsEl.innerHTML = '';
+    // Regional
+    if (window._AI_REGIONAL && window._AI_REGIONAL.length > 0) {
+      const _origRegions = renderRegionalStrategy;
+      const tabs = document.getElementById('regionTabs');
+      const content = document.getElementById('regionContent');
+      if (tabs && content) {
+        const regions = window._AI_REGIONAL;
+        tabs.innerHTML = regions.map((r, i) => `
+          <button class="competitor-tab ${i===0?'active':''}" onclick="currentRegion=${i};renderAiRegion()">${r.icon || '🌍'} ${r.region}</button>
+        `).join('');
+        window._aiRegions = regions;
+        currentRegion = 0;
+        renderAiRegion();
+      }
+    }
+    // Audience
+    if (window._AI_AUDIENCE) renderAudienceSegmentation();
+    return;
+  }
+  _origRenderAnalysis();
+};
+
+window.renderAiRegion = function() {
+  const regions = window._aiRegions;
+  if (!regions) return;
+  const r = regions[currentRegion];
+  const content = document.getElementById('regionContent');
+  document.querySelectorAll('.region-tabs .competitor-tab, #regionTabs .competitor-tab').forEach((b,i) => b.classList.toggle('active', i===currentRegion));
+  content.innerHTML = `
+    <div class="competitor-detail animate-in">
+      <div class="competitor-header"><span style="font-size:1.8rem;">${r.icon||'🌍'}</span><div><h3>${r.region}</h3><p style="font-size:0.82rem;color:var(--accent-gold);margin-top:2px;font-weight:600;">${r.playerBase||''}</p></div></div>
+      <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;">${r.overview||''}</p>
+      ${r.keyInsights ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">${r.keyInsights.map(i=>`<span class="ops-card-tag" style="padding:4px 10px;font-size:0.75rem;">${i}</span>`).join('')}</div>` : ''}
+      <div>${(r.strategy||[]).map((s,idx)=>`<div class="region-action-item"><div class="region-action-num">${idx+1}</div><div><div class="region-action-title">${s.action}</div><div class="region-action-detail">${s.detail}</div></div></div>`).join('')}</div>
+      ${r.kpi ? `<div class="strategy-kpi" style="margin-top:16px;"><span class="kpi-icon">📊</span> ${r.kpi}</div>` : ''}
+    </div>`;
+};
+
+// Patch reference panel for AI projects
+const _origOpenRefPanel = openRefPanel;
+openRefPanel = function(phase, type, cardTitle) {
+  if (currentProjectType && currentProjectType.startsWith('ai_')) {
+    // AI projects have no pre-built references
+    const panel = document.getElementById('refPanel');
+    const overlay = document.getElementById('refOverlay');
+    document.getElementById('refPanelTitle').textContent = '📚 参考案例 — ' + (cardTitle || '');
+    document.getElementById('refFilterBar').innerHTML = '';
+    document.getElementById('refContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted);font-family:var(--font-mono);"><div style="font-size:2rem;margin-bottom:12px;">🤖</div><p>AI 生成的项目暂无预置参考案例</p><p style="margin-top:8px;font-size:0.75rem;">可通过「📂 素材收藏」手动添加参考</p></div>';
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    return;
+  }
+  _origOpenRefPanel(phase, type, cardTitle);
+};
+
+// Patch audience for AI
+const _origRenderAudience = renderAudienceSegmentation;
+renderAudienceSegmentation = function() {
+  if (currentProjectType && currentProjectType.startsWith('ai_') && window._AI_AUDIENCE) {
+    const aud = window._AI_AUDIENCE;
+    const funnelEl = document.getElementById('audienceFunnel');
+    const segEl = document.getElementById('audienceSegments');
+    if (!aud || !aud.segments || !funnelEl || !segEl) return;
+
+    funnelEl.innerHTML = `<div class="audience-funnel-card"><div class="funnel-bars">
+      <div class="funnel-bar" style="width:${parseInt(aud.funnel?.core)||20}%;background:var(--accent-red);"><span>🔴 核心 ${aud.funnel?.core||'20%'}</span></div>
+      <div class="funnel-bar" style="width:${parseInt(aud.funnel?.broad)||35}%;background:var(--accent-orange);"><span>🟡 泛用户 ${aud.funnel?.broad||'35%'}</span></div>
+      <div class="funnel-bar" style="width:${parseInt(aud.funnel?.casual)||45}%;background:var(--accent-green);"><span>🟢 非核心 ${aud.funnel?.casual||'45%'}</span></div>
+    </div></div>`;
+
+    segEl.innerHTML = aud.segments.map(seg => `
+      <div class="audience-segment" style="border-left:4px solid ${seg.color||'var(--accent-blue)'};">
+        <div class="seg-header"><div><h3 class="seg-label">${seg.label||seg.tier}</h3><div class="seg-size">${seg.size||''}</div></div></div>
+        ${seg.portrait ? `<div class="seg-portrait"><h5>👤 用户画像</h5><div class="portrait-grid">
+          <div class="portrait-item"><span class="p-key">他们是谁</span><span class="p-val">${seg.portrait.who||''}</span></div>
+          <div class="portrait-item"><span class="p-key">年龄/性别</span><span class="p-val">${seg.portrait.age||''}</span></div>
+          <div class="portrait-item"><span class="p-key">行为特征</span><span class="p-val">${seg.portrait.behavior||''}</span></div>
+          <div class="portrait-item"><span class="p-key">核心动机</span><span class="p-val">${seg.portrait.motivation||''}</span></div>
+          <div class="portrait-item"><span class="p-key">付费意愿</span><span class="p-val">${seg.portrait.spend||''}</span></div>
+        </div></div>` : ''}
+        <div class="seg-strategies"><h5>🎯 对应策略</h5>${(seg.strategy||[]).map((s,i)=>`
+          <div class="region-action-item"><div class="region-action-num" style="background:${seg.color||'var(--accent-blue)'};">${i+1}</div><div><div class="region-action-title">${s.action}</div><div class="region-action-detail">${s.detail}</div></div></div>`).join('')}</div>
+        <div class="seg-footer">
+          ${seg.uaApproach ? `<div class="seg-ua-box"><span style="font-weight:700;color:var(--accent-cyan);">📈 获客思路:</span> ${seg.uaApproach}</div>` : ''}
+          ${seg.contentStyle ? `<div class="seg-content-box"><span style="font-weight:700;color:var(--accent-purple);">🎬 内容方向:</span> ${seg.contentStyle}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+    return;
+  }
+  _origRenderAudience();
+};
+
 // ─── Generate Plan ───
 function generatePlan() {
   const name = document.getElementById('projectName').value || '未命名项目';

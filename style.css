@@ -120,6 +120,17 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 @keyframes clockPulse { 0%,100% { opacity:1; box-shadow:0 0 4px var(--accent-green); } 50% { opacity:0.3; box-shadow:none; } }
 .clock-sep { color: var(--border-accent); }
 
+/* ═══ AI SECTION ═══ */
+.ai-section { margin-top: 20px; padding: 16px; background: rgba(63,185,80,0.04); border: 1px solid rgba(63,185,80,0.2); border-radius: var(--radius-md); }
+.ai-section-header { font-size: 0.85rem; margin-bottom: 12px; font-family: var(--font-mono); display: flex; align-items: center; gap: 8px; }
+.ai-badge { font-size: 0.6rem; padding: 1px 6px; background: rgba(63,185,80,0.15); color: var(--accent-green); border-radius: 3px; border: 1px solid rgba(63,185,80,0.3); font-weight: 600; }
+.btn-ai { width: 100%; padding: 10px; background: var(--bg-primary); color: var(--accent-green); font-weight: 700; font-size: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--accent-green); transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-mono); cursor: pointer; }
+.btn-ai:hover { background: rgba(63,185,80,0.1); }
+.ai-icon { font-size: 1rem; }
+.ai-status { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px; background: var(--bg-primary); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--accent-green); font-family: var(--font-mono); }
+.ai-spinner { width: 14px; height: 14px; border: 2px solid var(--border-primary); border-top-color: var(--accent-green); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 /* ═══ DASHBOARD ═══ */
 .dashboard-screen { display: none; }
 .dashboard-screen.active { display: block; }
