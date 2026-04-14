@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameOps Planner — 游戏全生命周期运营规划平台</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="app-container">
   <!-- ═══ TOP NAV ═══ -->
   <nav class="top-nav">
-    <div class="brand"><div class="icon">🎮</div><span>GameOps Planner</span><span class="data-date">数据更新: 2026.04.14</span></div>
+    <div class="brand"><div class="icon">▸</div><span>GameOps</span><span class="brand-dim">Planner</span><span class="data-date">live · 2026.04.14</span></div>
     <div class="nav-links" id="navLinks">
       <button class="active" data-nav="dashboard" onclick="switchNav('dashboard')">📊 运营看板</button>
       <button data-nav="analysis" onclick="switchNav('analysis')">🎯 游戏分析</button>
@@ -33,9 +33,27 @@
   <div class="main-content">
     <!-- ═══ SETUP SCREEN ═══ -->
     <div class="setup-screen active" id="setupScreen">
+      <!-- Hero Slogan -->
+      <div class="hero-terminal">
+        <div class="terminal-header">
+          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
+          <span class="term-title">gameops-planner — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <div class="term-line"><span class="term-prompt">$</span> <span class="typing-text">Welcome to</span></div>
+          <div class="pixel-slogan">生菜's Gaming World</div>
+          <div class="term-line dim"><span class="term-prompt">$</span> 游戏全生命周期运营规划平台 // CBT → EA → Soft Launch → Global Launch</div>
+          <div class="term-line dim"><span class="term-prompt">$</span> v9.0 · 3 projects loaded · data updated 2026.04.14</div>
+        </div>
+      </div>
+
       <div class="setup-card animate-in">
-        <h1>🚀 创建运营规划</h1>
-        <p class="subtitle">选择游戏基础信息，自动生成全生命周期运营蓝图</p>
+        <div class="card-terminal-header">
+          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
+          <span class="term-title">new-project.sh</span>
+        </div>
+        <h1>$ 创建运营规划</h1>
+        <p class="subtitle">> 选择游戏基础信息，自动生成全生命周期运营蓝图_</p>
 
         <div class="form-group">
           <label>🎯 游戏品类</label>
