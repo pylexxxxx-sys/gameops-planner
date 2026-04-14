@@ -75,12 +75,15 @@ function generatePlan() {
   document.getElementById('setupScreen').classList.remove('active');
   document.getElementById('dashboardScreen').classList.add('active');
 
-  // Steam dashboard
+  // Steam dashboard — all projects
   const steamEl = document.getElementById('steamDashboard');
   if (steamEl) {
-    if (currentProjectType === 'rust' && typeof RUST_STEAM !== 'undefined') {
+    const steamData = currentProjectType === 'rust' ? (typeof RUST_STEAM!=='undefined'?RUST_STEAM:null) :
+                      currentProjectType === 'hunt' ? (typeof HUNT_STEAM!=='undefined'?HUNT_STEAM:null) :
+                      (typeof POE2_STEAM!=='undefined'?POE2_STEAM:null);
+    if (steamData) {
       steamEl.style.display = 'block';
-      renderSteamDashboard();
+      renderSteamDashboard(steamData);
     } else {
       steamEl.style.display = 'none';
     }
@@ -869,9 +872,17 @@ function renderAudienceSegmentation() {
 // ═══════════════════════════════════════════════════════════════
 // STEAM DASHBOARD
 // ═══════════════════════════════════════════════════════════════
-function renderSteamDashboard() {
-  if (typeof RUST_STEAM === 'undefined') return;
-  const d = RUST_STEAM;
+function renderSteamDashboard(steamData) {
+  const d = steamData;
+  if (!d) return;
+  const appId = d.appId || 0;
+  const projName = currentProjectType === 'rust' ? 'RUST' : currentProjectType === 'hunt' ? 'Hunt: Showdown 1896' : 'Path of Exile 2';
+
+  // Update title & link
+  const titleEl = document.getElementById('steamTitle');
+  const linkEl = document.getElementById('steamLink');
+  if (titleEl) titleEl.textContent = '📈 Steam 实时在线数据 — ' + projName;
+  if (linkEl) linkEl.href = 'https://steamcharts.com/app/' + appId;
 
   // Stats row
   document.getElementById('steamStatsRow').innerHTML = `

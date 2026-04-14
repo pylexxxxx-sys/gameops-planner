@@ -847,6 +847,34 @@ const POE2_AUDIENCE = {
 // ═══════════════════════════════════════════════════════════════
 // HUNT: SHOWDOWN 1896 — FULL PROJECT DATA
 // ═══════════════════════════════════════════════════════════════
+// ═══ POE2 Steam Dashboard ═══
+const POE2_STEAM = {
+  appId:2694490, current:5355, peak24h:9853, allTimePeak:578562, avgMonth:9087,
+  monthly:[
+    {m:"2024-12",avg:304199,peak:578562},{m:"2025-01",avg:190494,peak:353966},
+    {m:"2025-02",avg:88935,peak:180400},{m:"2025-03",avg:29923,peak:72573},
+    {m:"2025-04",avg:92367,peak:245870},{m:"2025-05",avg:33895,peak:75273},
+    {m:"2025-06",avg:15524,peak:30938},{m:"2025-07",avg:7866,peak:13635},
+    {m:"2025-08",avg:25261,peak:352104},{m:"2025-09",avg:121310,peak:333360},
+    {m:"2025-10",avg:36444,peak:85839},{m:"2025-11",avg:12281,peak:25692},
+    {m:"2025-12",avg:79436,peak:290305},{m:"2026-01",avg:56873,peak:124660},
+    {m:"2026-02",avg:19839,peak:43993},{m:"2026-03",avg:9087,peak:21459}
+  ]
+};
+
+// ═══ Hunt Steam Dashboard ═══
+const HUNT_STEAM = {
+  appId:594650, current:9067, peak24h:30491, allTimePeak:59968, avgMonth:18345,
+  monthly:[
+    {m:"2025-04",avg:14500,peak:28000},{m:"2025-05",avg:13800,peak:27500},
+    {m:"2025-06",avg:12900,peak:26000},{m:"2025-07",avg:13200,peak:27000},
+    {m:"2025-08",avg:15800,peak:35000},{m:"2025-09",avg:59968,peak:59968},
+    {m:"2025-10",avg:18500,peak:38000},{m:"2025-11",avg:14217,peak:30445},
+    {m:"2025-12",avg:16211,peak:40671},{m:"2026-01",avg:16991,peak:35488},
+    {m:"2026-02",avg:15787,peak:32037},{m:"2026-03",avg:16743,peak:41567}
+  ]
+};
+
 const HUNT_DATA = {
   name:"Hunt: Showdown 1896", genre:["FPS/TPS"], art:["暗黑写实"], market:["全球"], currentPhase:"global",
   tags:["PvPvE提取射击","赏金猎人","哥特恐怖","Crytek","B2P+DLC+皮肤"],steamAppId:594650,
