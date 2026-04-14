@@ -63,6 +63,74 @@ updateClock();
 // AI ANALYSIS — Claude API Integration
 // ═══════════════════════════════════════════════════════════════
 
+// ─── Saved AI Projects ───
+function getSavedProjects() {
+  return JSON.parse(localStorage.getItem('gameops_ai_projects') || '[]');
+}
+
+function saveAiProject(name, data) {
+  const projects = getSavedProjects();
+  const key = name.toLowerCase().replace(/\s+/g, '_');
+  // Remove old version if exists
+  const idx = projects.findIndex(p => p.key === key);
+  if (idx >= 0) projects.splice(idx, 1);
+  // Add to front
+  projects.unshift({
+    key: key,
+    name: name,
+    tags: data.projectData?.tags || [],
+    savedAt: new Date().toISOString(),
+    data: data
+  });
+  // Keep max 20
+  if (projects.length > 20) projects.pop();
+  localStorage.setItem('gameops_ai_projects', JSON.stringify(projects));
+  renderSavedProjects();
+}
+
+function loadSavedProject(key) {
+  const projects = getSavedProjects();
+  const proj = projects.find(p => p.key === key);
+  if (!proj) return;
+  applyAiResult(proj.data, proj.name);
+}
+
+function deleteSavedProject(key, e) {
+  e.stopPropagation();
+  const projects = getSavedProjects().filter(p => p.key !== key);
+  localStorage.setItem('gameops_ai_projects', JSON.stringify(projects));
+  renderSavedProjects();
+}
+
+function renderSavedProjects() {
+  const projects = getSavedProjects();
+  const container = document.getElementById('savedProjects');
+  const list = document.getElementById('savedList');
+  if (!container || !list) return;
+
+  if (projects.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+
+  list.innerHTML = projects.map(p => `
+    <div class="saved-item" onclick="loadSavedProject('${p.key}')">
+      <div class="saved-item-info">
+        <span class="saved-item-name">🤖 ${p.name}</span>
+        <div class="saved-item-tags">${(p.tags||[]).slice(0,3).map(t => `<span class="saved-item-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="saved-item-date">${new Date(p.savedAt).toLocaleDateString('zh-CN')}</span>
+        <span class="saved-del" onclick="deleteSavedProject('${p.key}',event)">✕</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Init: render saved projects on load
+renderSavedProjects();
+
 // Load saved API key
 (function() {
   const saved = localStorage.getItem('gameops_api_key');
@@ -214,6 +282,9 @@ JSON结构如下：
 }
 
 function applyAiResult(ai, gameName) {
+  // Save to localStorage
+  saveAiProject(gameName, ai);
+
   // Set project data
   currentProjectType = 'ai_' + gameName.replace(/\s+/g, '_').toLowerCase();
 

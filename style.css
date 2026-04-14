@@ -131,6 +131,20 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 .ai-spinner { width: 14px; height: 14px; border: 2px solid var(--border-primary); border-top-color: var(--accent-green); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Saved AI Projects */
+.saved-projects { margin-top: 16px; padding: 12px; background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+.saved-list { display: flex; flex-direction: column; gap: 4px; }
+.saved-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); font-family: var(--font-mono); font-size: 0.78rem; }
+.saved-item:hover { border-color: var(--accent-green); background: var(--bg-hover); }
+.saved-item-info { display: flex; align-items: center; gap: 8px; }
+.saved-item-name { color: var(--accent-green); font-weight: 600; }
+.saved-item-date { color: var(--text-muted); font-size: 0.65rem; }
+.saved-item-tags { display: flex; gap: 4px; }
+.saved-item-tag { padding: 1px 5px; background: var(--bg-tertiary); border-radius: 3px; font-size: 0.6rem; color: var(--text-muted); }
+.saved-item-actions { display: flex; gap: 4px; }
+.saved-del { padding: 2px 6px; font-size: 0.65rem; color: var(--accent-red); cursor: pointer; border-radius: 3px; }
+.saved-del:hover { background: rgba(248,81,73,0.1); }
+
 /* ═══ DASHBOARD ═══ */
 .dashboard-screen { display: none; }
 .dashboard-screen.active { display: block; }
