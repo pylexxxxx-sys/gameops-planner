@@ -972,12 +972,63 @@ function renderAnalysis() {
   if (!ad) return;
   currentCompetitor = 0;
   currentRegion = 0;
+  renderBrandHouse();
   renderCoreFeatures(ad);
   renderCompetitors(ad);
   renderStrategies(ad);
   renderDiffPositioning();
   renderRegionalStrategy();
   renderAudienceSegmentation();
+}
+
+function renderBrandHouse() {
+  const bh = currentProjectType === 'rust' ? (typeof RUST_BRAND_HOUSE!=='undefined'?RUST_BRAND_HOUSE:null) :
+             currentProjectType === 'hunt' ? (typeof HUNT_BRAND_HOUSE!=='undefined'?HUNT_BRAND_HOUSE:null) :
+             (typeof POE2_BRAND_HOUSE!=='undefined'?POE2_BRAND_HOUSE:null);
+  const el = document.getElementById('brandHouseContent');
+  if (!el) return;
+  if (!bh) { el.innerHTML = '<div style="padding:20px;color:var(--text-muted);text-align:center;font-family:var(--font-mono);">AI 项目暂无品牌屋数据</div>'; return; }
+
+  el.innerHTML = `
+    <div class="brand-house">
+      <!-- Apex -->
+      <div class="bh-row bh-apex" style="--bh-color:${bh.apex.color}">
+        <div class="bh-label">${bh.apex.label}</div>
+        <div class="bh-block bh-single">${bh.apex.content}</div>
+      </div>
+      <!-- Promise -->
+      <div class="bh-row bh-promise" style="--bh-color:${bh.promise.color}">
+        <div class="bh-label">${bh.promise.label}</div>
+        <div class="bh-block bh-single">${bh.promise.content}</div>
+      </div>
+      <!-- Pillars -->
+      <div class="bh-row bh-pillars">
+        <div class="bh-label">核心支柱</div>
+        <div class="bh-pillars-grid">
+          ${bh.pillars.map(p => `
+            <div class="bh-pillar" style="--bh-color:${p.color}">
+              <div class="bh-pillar-title">${p.label}</div>
+              <ul>${p.items.map(i => `<li>${i}</li>`).join('')}</ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <!-- Foundation -->
+      <div class="bh-row bh-foundation" style="--bh-color:${bh.foundation.color}">
+        <div class="bh-label">${bh.foundation.label}</div>
+        <div class="bh-block bh-items-row">
+          ${bh.foundation.items.map(i => `<span class="bh-item">${i}</span>`).join('')}
+        </div>
+      </div>
+      <!-- Audiences -->
+      <div class="bh-row bh-audiences" style="--bh-color:${bh.audiences.color}">
+        <div class="bh-label">${bh.audiences.label}</div>
+        <div class="bh-block bh-items-row">
+          ${bh.audiences.items.map(i => `<span class="bh-item">${i}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function renderCoreFeatures(ad) {

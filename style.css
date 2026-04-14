@@ -308,6 +308,33 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 .analysis-section-header p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
 
 .analysis-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+/* ═══ BRAND HOUSE PYRAMID ═══ */
+.brand-house { display: flex; flex-direction: column; gap: 2px; }
+.bh-row { display: flex; align-items: stretch; gap: 0; position: relative; }
+.bh-label { width: 90px; min-width: 90px; padding: 8px 10px; font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-family: var(--font-mono); display: flex; align-items: center; text-align: right; justify-content: flex-end; }
+.bh-block { flex: 1; padding: 12px 16px; border-left: 3px solid var(--bh-color, var(--border-accent)); background: var(--bg-card); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+
+/* Apex - narrowest */
+.bh-apex .bh-block { text-align: center; font-size: 1.1rem; font-weight: 800; color: var(--text-primary); background: linear-gradient(135deg, rgba(248,81,73,0.08), rgba(210,153,34,0.08)); padding: 16px; font-family: var(--font-mono); }
+.bh-apex .bh-block::before { content: '▲'; display: block; font-size: 1.5rem; margin-bottom: 4px; opacity: 0.3; }
+
+/* Promise */
+.bh-promise .bh-block { text-align: center; font-size: 0.88rem; font-weight: 600; color: var(--accent-orange); background: rgba(210,153,34,0.05); font-family: var(--font-mono); }
+
+/* Pillars */
+.bh-pillars-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2px; }
+.bh-pillar { padding: 12px; background: var(--bg-card); border-left: 3px solid var(--bh-color, var(--border-accent)); }
+.bh-pillar-title { font-size: 0.78rem; font-weight: 800; color: var(--bh-color); margin-bottom: 8px; font-family: var(--font-mono); }
+.bh-pillar ul { list-style: none; padding: 0; margin: 0; }
+.bh-pillar li { font-size: 0.7rem; color: var(--text-secondary); padding: 2px 0; padding-left: 12px; position: relative; line-height: 1.5; font-family: var(--font-mono); }
+.bh-pillar li::before { content: '·'; position: absolute; left: 2px; color: var(--bh-color); font-weight: 700; }
+
+/* Foundation & Audiences */
+.bh-items-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.bh-item { padding: 4px 10px; background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); font-size: 0.7rem; color: var(--text-secondary); font-family: var(--font-mono); }
+.bh-foundation .bh-block { background: rgba(63,185,80,0.03); }
+.bh-audiences .bh-block { background: rgba(88,166,255,0.03); }
 .strategy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
 
 .analysis-card { background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 20px; transition: var(--transition); }

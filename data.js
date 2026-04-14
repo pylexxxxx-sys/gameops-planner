@@ -1026,6 +1026,49 @@ const HUNT_AUDIENCE = {
         {action:"「我不敢玩但我爱看」观众经济",detail:"这批人不会成为玩家但会成为直播观众。确保Hunt主播有足够的恐怖+紧张+搞笑内容供给。"},
         {action:"Steam免费周末+大促定期降门槛",detail:"买断制是最大障碍。免费周末让好奇者零成本尝试。"},
         {action:"IP联动破圈",detail:"与恐怖电影/IP联动(如温子仁/Castlevania),让不玩游戏的恐怖爱好者也认识Hunt。"}
-      ],uaApproach:"不直接获取。通过恐怖内容+万圣节话题+IP联动让他们自然进入漏斗。转化目标:免费周末3-5%→购买。",contentStyle:"恐怖氛围ASMR / 万圣节特辑 / 「最吓人的时刻」集锦 / 恐怖电影×Hunt联动 / 美学展示"}
+      ],uaApproach:"不直接获取。通过恐怖内容+万圣节话题+IP联动让他们自然进入漏斗。转化目标:免费周末3-5%→购买。",      contentStyle:"恐怖氛围ASMR / 万圣节特辑 / 「最吓人的时刻」集锦 / 恐怖电影×Hunt联动 / 美学展示"}
   ]
+};
+
+// ═══════════════════════════════════════════════════════════════
+// BRAND HOUSE — 品牌屋金字塔
+// ═══════════════════════════════════════════════════════════════
+
+const POE2_BRAND_HOUSE = {
+  apex: { label:"品牌定位", content:"暗黑ARPG品类的终极深度体验", color:"var(--accent-red)" },
+  promise: { label:"品牌承诺", content:"无限的Build自由 · 绝对的公平竞技 · 永不结束的暗黑世界", color:"var(--accent-orange)" },
+  pillars: [
+    { label:"Build自由度", items:["1500+天赋节点","宝石系统无限组合","12职业升阶","社区BD创意大赛","Path of Building工具生态"], color:"var(--phase-cbt)" },
+    { label:"公平付费", items:["F2P完全免费","纯装饰MTX","不卖数值/体力/抽卡","对比D4/Lost Ark降维打击","「公平」成为品牌第一联想"], color:"var(--phase-ea)" },
+    { label:"赛季永动机", items:["每3月全新赛季","全服重置+新机制","赛季预告=UA素材","World First竞速赛","ExileCon品牌事件"], color:"var(--phase-soft)" },
+    { label:"暗黑美学", items:["Grimdark审美天花板","暗色调KV统一语言","暗黑IP联动","视觉筛选高价值用户","反二次元差异化"], color:"var(--phase-global)" }
+  ],
+  foundation: { label:"底层支撑", items:["GGG开发者透明度","Chris Wilson社区信任","8年PoE1社区积累","Reddit/Discord核心阵地","创作者UGC自传播飞轮"], color:"var(--accent-green)" },
+  audiences: { label:"目标人群", items:["核心: Theorycrafter/Grinder (20%)","泛用户: D4/Lost Ark迁移者 (35%)","非核心: CG预告片路人 (45%)"], color:"var(--accent-blue)" }
+};
+
+const RUST_BRAND_HOUSE = {
+  apex: { label:"品牌定位", content:"唯一真正让你「失去一切」的生存沙盒", color:"var(--accent-red)" },
+  promise: { label:"品牌承诺", content:"真实的危险 · 自由的建造 · 永不结束的服务器社会", color:"var(--accent-orange)" },
+  pillars: [
+    { label:"Full Loot PvP", items:["死亡掉落一切","抄家/偷袭/伏击","高风险=高情绪波动","「你敢吗？」病毒内容","紧张感不可替代"], color:"var(--phase-cbt)" },
+    { label:"深度建造", items:["建造+电路系统","自动化农场/安防","基地设计UGC","「Rust Base Tour」内容品类","Mobile端建造体验"], color:"var(--phase-ea)" },
+    { label:"社交沙盒", items:["服务器=微型社会","外交/贸易/背叛","每个服务器独一无二故事","社会实验=天然病毒内容","Welyn电影化叙事"], color:"var(--phase-soft)" },
+    { label:"Wipe赛季制", items:["每月服务器重置","全员同一起跑线","Wipe Day=直播事件","天然回归驱动力","双端同步Wipe(Mobile)"], color:"var(--phase-global)" }
+  ],
+  foundation: { label:"底层支撑", items:["8年长线运营+10万月活","Twitch 3050万小时/年","Welyn/hJune创作者矩阵","皮肤经济+Twitch Drops","Rust Mobile品类空白占位"], color:"var(--accent-green)" },
+  audiences: { label:"目标人群", items:["核心: PC端500h+老玩家 (15%)","泛用户: 吃鸡/MC跨品类 (40%)","非核心: 云玩家/Meme消费者 (45%)"], color:"var(--accent-blue)" }
+};
+
+const HUNT_BRAND_HOUSE = {
+  apex: { label:"品牌定位", content:"PvPvE提取射击的氛围天花板", color:"var(--accent-red)" },
+  promise: { label:"品牌承诺", content:"双重狩猎的极致紧张 · 用耳朵战斗 · 19世纪暗黑美学", color:"var(--accent-orange)" },
+  pillars: [
+    { label:"PvPvE双重狩猎", items:["打Boss时被人猎杀","双重威胁=双重紧张","赏金竞速赛制","Boss路线战术选择","提取逃生=天然短视频"], color:"var(--phase-cbt)" },
+    { label:"音效即武器", items:["行业顶级音效设计","脚步/枪声=战术信息","不同地面不同声音","「闭眼Hunt」创意系列","SteelSeries联名耳机"], color:"var(--phase-ea)" },
+    { label:"哥特恐怖美学", items:["19世纪路易斯安那沼泽","维多利亚×克苏鲁","完全独占的视觉赛道","万圣节=年度品牌事件","Hunt Art Book画集"], color:"var(--phase-soft)" },
+    { label:"Permadeath博弈", items:["猎人死亡=永久失去","装备选择=风险决策","「你敢带传奇武器吗？」","高风险高回报循环","反快餐射击定位"], color:"var(--phase-global)" }
+  ],
+  foundation: { label:"底层支撑", items:["Crytek引擎技术力","1896大更新品质飞跃","Psychoghost/Neenoh创作者","Twitch Drops皮肤经济","恐怖/哥特IP联动潜力"], color:"var(--accent-green)" },
+  audiences: { label:"目标人群", items:["核心: 500h+老猎人 (25%)","泛用户: CoD/Tarkov迁移者 (35%)","非核心: 恐怖内容消费者 (40%)"], color:"var(--accent-blue)" }
 };
