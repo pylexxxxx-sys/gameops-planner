@@ -33,132 +33,55 @@
   <div class="main-content">
     <!-- ═══ SETUP SCREEN ═══ -->
     <div class="setup-screen active" id="setupScreen">
-      <!-- Hero Slogan -->
-      <div class="hero-terminal">
-        <div class="terminal-header">
-          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
-          <span class="term-title">gameops-planner — zsh</span>
-        </div>
-        <div class="terminal-body">
-          <div class="term-line"><span class="term-prompt">$</span> <span class="typing-text">Welcome to</span></div>
-          <div class="pixel-slogan">IRVING's Gaming World</div>
-          <div class="term-line dim"><span class="term-prompt">$</span> 游戏全生命周期运营规划平台 // CBT → EA → Soft Launch → Global Launch</div>
-          <div class="term-line dim"><span class="term-prompt">$</span> v9.0 · 3 projects loaded · data updated 2026.04.14</div>
-        </div>
-      </div>
-
-      <div class="setup-card animate-in">
-        <div class="card-terminal-header">
-          <span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
-          <span class="term-title">new-project.sh</span>
-        </div>
-        <h1>$ 创建运营规划</h1>
-        <p class="subtitle">> 选择游戏基础信息，自动生成全生命周期运营蓝图_</p>
-
-        <div class="form-group">
-          <label>🎯 游戏品类</label>
-          <div class="tag-selector" id="genreSelector">
-            <button class="tag-btn" data-value="ARPG">⚔️ ARPG</button>
-            <button class="tag-btn" data-value="生存建造">🏗️ 生存建造</button>
-            <button class="tag-btn" data-value="MOBA">🏟️ MOBA</button>
-            <button class="tag-btn" data-value="FPS/TPS">🎯 FPS/TPS</button>
-            <button class="tag-btn" data-value="开放世界">🌍 开放世界</button>
-            <button class="tag-btn" data-value="回合策略">♟️ 回合策略</button>
-            <button class="tag-btn" data-value="Roguelike">🎲 Roguelike</button>
-            <button class="tag-btn" data-value="MMO">👥 MMO</button>
-            <button class="tag-btn" data-value="竞速">🏎️ 竞速</button>
-            <button class="tag-btn" data-value="卡牌">🃏 卡牌</button>
+      <!-- HERO -->
+      <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="hero-terminal reveal">
+          <div class="terminal-header"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-title">gameops-planner</span></div>
+          <div class="terminal-body">
+            <div class="term-line"><span class="term-prompt">$</span> <span class="typing-text" id="heroTyping"></span><span class="cursor">|</span></div>
+            <div class="pixel-slogan reveal-delay-1">IRVING's Gaming World</div>
+            <div class="hero-tagline reveal-delay-2">游戏全生命周期运营规划平台</div>
+            <div class="hero-stats reveal-delay-3">
+              <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">项目模板</span></div>
+              <div class="hero-stat"><span class="hero-stat-num">50+</span><span class="hero-stat-label">运营卡片</span></div>
+              <div class="hero-stat"><span class="hero-stat-num">15+</span><span class="hero-stat-label">竞品对比</span></div>
+              <div class="hero-stat"><span class="hero-stat-num">AI</span><span class="hero-stat-label">智能分析</span></div>
+            </div>
           </div>
         </div>
+        <div class="scroll-hint reveal-delay-3">↓ scroll ↓</div>
+      </section>
 
-        <div class="form-group">
-          <label>🎨 美术风格</label>
-          <div class="tag-selector" id="artSelector">
-            <button class="tag-btn" data-value="暗黑写实">🖤 暗黑写实</button>
-            <button class="tag-btn" data-value="二次元">🌸 二次元</button>
-            <button class="tag-btn" data-value="卡通">🎨 卡通风</button>
-            <button class="tag-btn" data-value="低多边形">💎 低多边形</button>
-            <button class="tag-btn" data-value="赛博朋克">🌆 赛博朋克</button>
-            <button class="tag-btn" data-value="像素">👾 像素</button>
-            <button class="tag-btn" data-value="次世代写实">📷 次世代写实</button>
-            <button class="tag-btn" data-value="水墨国风">🎋 水墨国风</button>
+      <!-- PROJECT CARDS -->
+      <section class="projects-section">
+        <h2 class="section-title reveal">选择项目 <span class="dim">或创建新的</span></h2>
+        <div class="project-cards-grid">
+          <div class="project-card reveal" onclick="loadPoe2Preset()" style="--card-accent:var(--phase-cbt)"><div class="pcard-glow"></div><div class="pcard-icon">⚔️</div><div class="pcard-info"><h3>Path of Exile 2</h3><p>硬核ARPG · 暗黑写实 · F2P+MTX</p><div class="pcard-tags"><span>ARPG</span><span>全球</span><span>EA</span></div></div><div class="pcard-arrow">→</div></div>
+          <div class="project-card reveal" onclick="loadRustPreset()" style="--card-accent:var(--accent-orange)"><div class="pcard-glow"></div><div class="pcard-icon">🏗️</div><div class="pcard-info"><h3>RUST / RUST Mobile</h3><p>生存建造 · PvP社交 · B2P+皮肤</p><div class="pcard-tags"><span>生存</span><span>全球</span><span>Mobile</span></div></div><div class="pcard-arrow">→</div></div>
+          <div class="project-card reveal" onclick="loadHuntPreset()" style="--card-accent:var(--accent-red)"><div class="pcard-glow"></div><div class="pcard-icon">🤠</div><div class="pcard-info"><h3>Hunt: Showdown 1896</h3><p>PvPvE提取射击 · 哥特恐怖 · Crytek</p><div class="pcard-tags"><span>FPS</span><span>全球</span><span>运营中</span></div></div><div class="pcard-arrow">→</div></div>
+        </div>
+      </section>
+
+      <!-- SAVED AI -->
+      <section class="saved-section" id="savedSection" style="display:none;"><h2 class="section-title reveal">📂 历史 AI 分析</h2><div class="saved-list" id="savedList"></div></section>
+
+      <!-- CREATE NEW -->
+      <section class="create-section">
+        <h2 class="section-title reveal">自定义项目 <span class="dim">手动或 AI 生成</span></h2>
+        <div class="create-card reveal">
+          <div class="card-terminal-header"><span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span><span class="term-title">new-project.sh</span></div>
+          <div class="create-card-body">
+            <div class="form-row"><div class="form-group flex-1"><label>🎯 品类</label><div class="tag-selector" id="genreSelector"><button class="tag-btn" data-value="ARPG">⚔️ ARPG</button><button class="tag-btn" data-value="生存建造">🏗️ 生存</button><button class="tag-btn" data-value="MOBA">🏟️ MOBA</button><button class="tag-btn" data-value="FPS/TPS">🎯 FPS</button><button class="tag-btn" data-value="开放世界">🌍 开放世界</button><button class="tag-btn" data-value="Roguelike">🎲 Rogue</button><button class="tag-btn" data-value="MMO">👥 MMO</button></div></div><div class="form-group flex-1"><label>🎨 美术</label><div class="tag-selector" id="artSelector"><button class="tag-btn" data-value="暗黑写实">🖤 暗黑</button><button class="tag-btn" data-value="二次元">🌸 二次元</button><button class="tag-btn" data-value="卡通">🎨 卡通</button><button class="tag-btn" data-value="赛博朋克">🌆 赛博</button><button class="tag-btn" data-value="次世代写实">📷 次世代</button><button class="tag-btn" data-value="水墨国风">🎋 国风</button></div></div></div>
+            <div class="form-row"><div class="form-group flex-1"><label>🌍 市场</label><div class="tag-selector" id="marketSelector"><button class="tag-btn" data-value="全球">🌐 全球</button><button class="tag-btn" data-value="北美">🇺🇸 北美</button><button class="tag-btn" data-value="欧洲">🇪🇺 欧洲</button><button class="tag-btn" data-value="日本">🇯🇵 日本</button><button class="tag-btn" data-value="韩国">🇰🇷 韩国</button><button class="tag-btn" data-value="东南亚">🌏 SEA</button><button class="tag-btn" data-value="中国大陆">🇨🇳 中国</button></div></div><div class="form-group flex-1"><label>📍 节点</label><div class="tag-selector single" id="phaseSelector"><button class="tag-btn" data-value="cbt">🔬 CBT</button><button class="tag-btn" data-value="ea">🚀 EA</button><button class="tag-btn" data-value="soft">📊 Soft</button><button class="tag-btn" data-value="global">🌐 Global</button></div></div></div>
+            <div class="form-group"><label>📝 项目名称</label><input class="form-input" id="projectName" placeholder="例如: Wuthering Waves / Delta Force / Marvel Rivals"></div>
+            <div class="btn-row"><button class="btn-primary" onclick="generatePlan()">⚡ 生成规划蓝图</button></div>
+            <div class="ai-section"><div class="ai-section-header"><span class="term-prompt">$</span> <strong>AI 智能分析</strong> <span class="ai-badge">Claude API</span></div><div class="form-group" style="margin-bottom:12px;"><label>🔑 API KEY</label><input class="form-input" id="apiKeyInput" type="password" placeholder="sk-ant-api03-..."></div><button class="btn-ai" onclick="aiGeneratePlan()"><span class="ai-icon">🤖</span> AI 自动生成完整分析</button><div class="ai-status" id="aiStatus" style="display:none;"><div class="ai-spinner"></div><span id="aiStatusText">分析中...</span></div></div>
           </div>
         </div>
+      </section>
 
-        <div class="form-group">
-          <label>🌍 目标市场</label>
-          <div class="tag-selector" id="marketSelector">
-            <button class="tag-btn" data-value="全球">🌐 全球</button>
-            <button class="tag-btn" data-value="北美">🇺🇸 北美</button>
-            <button class="tag-btn" data-value="欧洲">🇪🇺 欧洲</button>
-            <button class="tag-btn" data-value="日本">🇯🇵 日本</button>
-            <button class="tag-btn" data-value="韩国">🇰🇷 韩国</button>
-            <button class="tag-btn" data-value="东南亚">🌏 东南亚</button>
-            <button class="tag-btn" data-value="中国大陆">🇨🇳 中国大陆</button>
-            <button class="tag-btn" data-value="拉丁美洲">🌎 拉丁美洲</button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>📍 当前所处节点</label>
-          <div class="tag-selector single" id="phaseSelector">
-            <button class="tag-btn" data-value="cbt">🔬 CBT (封闭测试)</button>
-            <button class="tag-btn" data-value="ea">🚀 EA (抢先体验)</button>
-            <button class="tag-btn" data-value="soft">📊 Soft Launch</button>
-            <button class="tag-btn" data-value="global">🌐 Global Launch</button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>📝 项目名称</label>
-          <input class="form-input" id="projectName" placeholder="例如：Path of Exile 2">
-        </div>
-
-        <button class="btn-primary" onclick="generatePlan()">⚡ 生成运营规划蓝图</button>
-
-        <!-- AI Analysis Section -->
-        <div class="ai-section">
-          <div class="ai-section-header">
-            <span class="term-prompt">$</span> <strong>AI 智能分析</strong> <span class="ai-badge">Claude API</span>
-          </div>
-          <div class="form-group" style="margin-bottom:12px;">
-            <label>🔑 API KEY (存在本地，不上传)</label>
-            <input class="form-input" id="apiKeyInput" type="password" placeholder="sk-ant-api03-..." value="">
-            <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">Key 仅存储在你的浏览器 localStorage 中，刷新不丢</div>
-          </div>
-          <button class="btn-ai" onclick="aiGeneratePlan()">
-            <span class="ai-icon">🤖</span> AI 自动生成完整分析
-          </button>
-          <div class="ai-status" id="aiStatus" style="display:none;">
-            <div class="ai-spinner"></div>
-            <span id="aiStatusText">正在分析中...</span>
-          </div>
-        </div>
-
-        <div class="preset-hint">
-          💡 <strong>快速体验：</strong>选择预设项目直接查看完整 Demo
-          <button class="preset-btn" onclick="loadPoe2Preset()">⚔️ PoE2</button>
-          <button class="preset-btn" style="background:var(--accent-orange);" onclick="loadRustPreset()">🏗️ RUST</button>
-          <button class="preset-btn" style="background:var(--accent-red);" onclick="loadHuntPreset()">🤠 Hunt 1896</button>
-        </div>
-
-        <!-- Saved AI Projects -->
-        <div class="saved-projects" id="savedProjects" style="display:none;">
-          <div class="ai-section-header" style="margin-bottom:8px;">
-            <span class="term-prompt">$</span> <strong>历史 AI 分析项目</strong> <span class="ai-badge">本地存储</span>
-          </div>
-          <div class="saved-list" id="savedList"></div>
-        </div>
-
-        <div class="live-clock-bar">
-          <div class="clock-dot"></div>
-          <span>数据库状态: <strong>实时就绪</strong></span>
-          <span class="clock-sep">|</span>
-          <span>最后更新: <strong>2026.04.14</strong></span>
-          <span class="clock-sep">|</span>
-          <span>当前时间: <strong id="liveClock">--:--:--</strong></span>
-        </div>
-      </div>
+      <div class="live-clock-bar reveal"><div class="clock-dot"></div><span>live</span><span class="clock-sep">|</span><span>updated 2026.04.16</span><span class="clock-sep">|</span><span id="liveClock">--:--:--</span></div>
     </div>
 
     <!-- ═══ DASHBOARD SCREEN ═══ -->

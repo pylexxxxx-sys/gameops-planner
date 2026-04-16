@@ -59,6 +59,57 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+// ─── Scroll Reveal (Apple-style) ───
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+// Also observe dynamically added elements
+setInterval(() => {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+}, 500);
+
+// ─── Typing effect for hero ───
+(function() {
+  const el = document.getElementById('heroTyping');
+  if (!el) return;
+  const text = 'Welcome to';
+  let i = 0;
+  function type() {
+    if (i <= text.length) { el.textContent = text.slice(0, i); i++; setTimeout(type, 80); }
+  }
+  setTimeout(type, 600);
+})();
+
+// ─── Update savedProjects container for new layout ───
+function renderSavedProjectsNew() {
+  const projects = getSavedProjects();
+  const section = document.getElementById('savedSection');
+  const list = document.getElementById('savedList');
+  if (!section || !list) return renderSavedProjects();
+  if (projects.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = projects.map(p => `
+    <div class="project-card reveal visible" onclick="loadSavedProject('${p.key}')" style="--card-accent:var(--accent-cyan)">
+      <div class="pcard-glow"></div>
+      <div class="pcard-icon">🤖</div>
+      <div class="pcard-info">
+        <h3>${p.name}</h3>
+        <p>${(p.tags||[]).join(' · ')}</p>
+        <div class="pcard-tags"><span>${new Date(p.savedAt).toLocaleDateString('zh-CN')}</span><span>AI生成</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="pcard-arrow">→</div>
+        <span class="saved-del" onclick="event.stopPropagation();deleteSavedProject('${p.key}',event);renderSavedProjectsNew();">✕</span>
+      </div>
+    </div>
+  `).join('');
+}
+// Override
+const _origRenderSaved = renderSavedProjects;
+renderSavedProjects = renderSavedProjectsNew;
+renderSavedProjectsNew();
+
 // ═══════════════════════════════════════════════════════════════
 // AI ANALYSIS — Claude API Integration
 // ═══════════════════════════════════════════════════════════════

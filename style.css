@@ -93,13 +93,61 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
   letter-spacing: -1px;
 }
 
-/* ═══ SETUP SCREEN ═══ */
-.setup-screen { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 80px); }
+/* ═══ SETUP SCREEN — Apple-style scrollable layout ═══ */
+.setup-screen { display: none; flex-direction: column; align-items: center; gap: 0; padding-bottom: 60px; }
 .setup-screen.active { display: flex; }
-.setup-card { background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 32px; max-width: 720px; width: 100%; position: relative; }
-.card-terminal-header { display: flex; align-items: center; gap: 6px; margin: -32px -32px 20px -32px; padding: 8px 12px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-primary); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
-.setup-card h1 { font-size: 1.3rem; font-weight: 700; color: var(--accent-green); font-family: var(--font-mono); margin-bottom: 2px; }
-.setup-card .subtitle { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 28px; font-family: var(--font-mono); }
+
+/* Scroll reveal animation */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* Hero Section */
+.hero-section { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; width: 100%; padding: 60px 0 40px; }
+.hero-glow { position: absolute; top: 50%; left: 50%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(63,185,80,0.08) 0%, transparent 70%); transform: translate(-50%,-50%); pointer-events: none; }
+.hero-tagline { font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; }
+.hero-stats { display: flex; gap: 32px; margin-top: 24px; }
+.hero-stat { display: flex; flex-direction: column; align-items: center; }
+.hero-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--accent-green); font-family: var(--font-mono); }
+.hero-stat-label { font-size: 0.65rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; }
+.scroll-hint { font-size: 0.7rem; color: var(--text-muted); margin-top: 40px; animation: scrollBounce 2s ease-in-out infinite; font-family: var(--font-mono); }
+@keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+.cursor { animation: blink 1s step-end infinite; color: var(--accent-green); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* Section Titles */
+.section-title { font-size: 1.3rem; font-weight: 800; font-family: var(--font-mono); margin-bottom: 20px; text-align: center; width: 100%; }
+.section-title .dim { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; }
+
+/* Project Cards — Apple style */
+.projects-section { width: 100%; max-width: 900px; padding: 60px 0; }
+.project-cards-grid { display: flex; flex-direction: column; gap: 12px; }
+.project-card { display: flex; align-items: center; gap: 16px; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.4s cubic-bezier(0.16,1,0.3,1); position: relative; overflow: hidden; }
+.project-card:hover { transform: translateY(-4px) scale(1.01); border-color: var(--card-accent, var(--accent-green)); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px var(--card-accent, var(--accent-green)); }
+.project-card:active { transform: scale(0.98); }
+.pcard-glow { position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: radial-gradient(circle, var(--card-accent, var(--accent-green)), transparent 70%); opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+.project-card:hover .pcard-glow { opacity: 0.06; }
+.pcard-icon { font-size: 2.2rem; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border-radius: var(--radius-md); border: 1px solid var(--border-primary); flex-shrink: 0; }
+.pcard-info { flex: 1; }
+.pcard-info h3 { font-size: 1rem; font-weight: 700; font-family: var(--font-mono); margin-bottom: 4px; }
+.pcard-info p { font-size: 0.78rem; color: var(--text-secondary); font-family: var(--font-mono); }
+.pcard-tags { display: flex; gap: 4px; margin-top: 6px; }
+.pcard-tags span { padding: 2px 8px; background: var(--bg-primary); border: 1px solid var(--border-primary); border-radius: 3px; font-size: 0.6rem; color: var(--text-muted); font-family: var(--font-mono); }
+.pcard-arrow { font-size: 1.2rem; color: var(--text-muted); transition: all 0.3s; font-family: var(--font-mono); }
+.project-card:hover .pcard-arrow { color: var(--card-accent, var(--accent-green)); transform: translateX(4px); }
+
+/* Saved section */
+.saved-section { width: 100%; max-width: 900px; padding: 40px 0; }
+
+/* Create card */
+.create-section { width: 100%; max-width: 900px; padding: 40px 0; }
+.create-card { background: var(--bg-card); border: 1px solid var(--border-primary); border-radius: var(--radius-lg); overflow: hidden; }
+.create-card-body { padding: 24px; }
+.form-row { display: flex; gap: 16px; margin-bottom: 0; }
+.flex-1 { flex: 1; }
+.btn-row { margin-top: 8px; margin-bottom: 0; }
 
 .form-group { margin-bottom: 20px; }
 .form-group label { display: block; font-weight: 600; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-mono); }
