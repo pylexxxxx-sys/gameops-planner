@@ -115,6 +115,13 @@ renderSavedProjectsNew();
 // ═══════════════════════════════════════════════════════════════
 
 // ─── Saved AI Projects ───
+
+// Interview single-select helper
+window.iqSingleSelect = function(btn) {
+  btn.closest('.tag-selector').querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+};
+
 function getSavedProjects() {
   return JSON.parse(localStorage.getItem('gameops_ai_projects') || '[]');
 }
@@ -274,13 +281,40 @@ JSON结构如下：
 7. 所有内容必须基于真实的游戏行业知识
 8. 只输出JSON，不要markdown或其他格式`;
 
+  // Collect interview answers
+  const getSelected = (id) => [...document.querySelectorAll(`#${id} .tag-btn.selected`)].map(b => b.dataset.value);
+  const getSingle = (id) => { const b = document.querySelector(`#${id} .tag-btn.selected`); return b ? b.dataset.value : ''; };
+  const iqGoals = getSelected('iqGoalSelector');
+  const iqDau = getSingle('iqDauSelector');
+  const iqMonet = getSelected('iqMonetSelector');
+  const iqPlatform = getSelected('iqPlatformSelector');
+  const iqTime = getSingle('iqTimeSelector');
+  const iqChallenge = getSelected('iqChallengeSelector');
+  const iqTeam = getSingle('iqTeamSelector');
+  const iqExtra = (document.getElementById('iqExtra')?.value || '').trim();
+
   const userMsg = `游戏名: ${gameName}
 品类: ${genres.join(', ') || '未指定'}
 美术风格: ${arts.join(', ') || '未指定'}
 目标市场: ${markets.join(', ') || '全球'}
 当前节点: ${phase}
 
-请生成完整的运营分析数据(JSON格式)。`;
+===== 需求访谈 =====
+核心目标: ${iqGoals.join(', ') || '未指定'}
+DAU目标: ${iqDau || '未指定'}
+商业化模式: ${iqMonet.join(', ') || '未指定'}
+目标平台: ${iqPlatform.join(', ') || '未指定'}
+时间节奏: ${iqTime || '未指定'}
+最大挑战: ${iqChallenge.join(', ') || '未指定'}
+团队规模: ${iqTeam || '未指定'}
+${iqExtra ? '补充信息: ' + iqExtra : ''}
+=====================
+
+请根据以上信息生成完整的运营分析数据(JSON格式)。注意:
+- 分析和策略要针对用户填写的核心目标和挑战来定制
+- DAU目标和团队规模会影响策略的规模和优先级
+- 商业化模式影响UA和留存策略
+- 时间节奏影响各阶段的紧迫度和资源分配`;
 
   try {
     showAiStatus('Claude 正在分析「' + gameName + '」...');

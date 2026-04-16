@@ -176,6 +176,13 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 .btn-ai:hover { background: rgba(63,185,80,0.1); }
 .ai-icon { font-size: 1rem; }
 .ai-status { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px; background: var(--bg-primary); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--accent-green); font-family: var(--font-mono); }
+
+/* Interview Questions */
+.interview-section { margin-bottom: 16px; }
+.interview-header { font-size: 0.78rem; color: var(--accent-cyan); font-family: var(--font-mono); margin-bottom: 14px; padding: 8px 12px; background: rgba(57,211,83,0.05); border: 1px solid rgba(57,211,83,0.12); border-radius: var(--radius-sm); }
+.interview-questions { display: flex; flex-direction: column; gap: 14px; }
+.iq-group { }
+.iq-group label { display: block; font-weight: 600; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; font-family: var(--font-mono); }
 .ai-spinner { width: 14px; height: 14px; border: 2px solid var(--border-primary); border-top-color: var(--accent-green); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
