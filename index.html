@@ -41,6 +41,15 @@
       </div>
     </div>
 
+    <!-- Guides -->
+    <div class="sb-section">
+      <div class="sb-label">指引</div>
+      <div class="sb-nav">
+        <button class="sb-nav-item" data-nav="template" onclick="switchNav('template')"><span class="sb-nav-icon">📋</span> 方案模板</button>
+        <button class="sb-nav-item" data-nav="guide" onclick="switchNav('guide')"><span class="sb-nav-icon">🌐</span> 发行指南</button>
+      </div>
+    </div>
+
     <!-- Role Filter -->
     <div class="sb-section sb-roles" id="sbRoles" style="display:none;">
       <div class="sb-label">视角</div>
@@ -372,6 +381,160 @@
     </div>
   </div>
 </div>
+
+    <!-- ═══ TEMPLATE GUIDE SCREEN ═══ -->
+    <div class="guide-screen" id="templateScreen">
+      <div class="guide-doc">
+        <h1>📋 市场发行方案模板指引</h1>
+        <p class="guide-subtitle">基于 POE2 EA 市场策略方案结构 · 新手友好 · 可直接套用</p>
+
+        <div class="guide-section">
+          <h2>方案整体结构（10个模块）</h2>
+          <p>每份游戏发行方案都遵循以下固定结构。<span class="var-tag">橙色</span> 表示需要根据游戏填写的变量，<span class="fix-tag">灰色</span> 表示固定格式。</p>
+          <table class="guide-table">
+            <thead><tr><th>序号</th><th>模块</th><th>内容</th><th>性质</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>产品概况</td><td>名称/时间/定价/平台/品类/卖点/Roadmap</td><td><span class="var-tag">变量</span></td></tr>
+              <tr><td>2</td><td>产品定位</td><td>一句话定位 + 卖点矩阵图</td><td><span class="var-tag">变量</span></td></tr>
+              <tr><td>3</td><td>用户圈层</td><td>核心/次核/泛 三层漏斗</td><td><span class="fix-tag">固定结构</span> <span class="var-tag">内容变量</span></td></tr>
+              <tr><td>4</td><td>市场机会与挑战</td><td>各3-5条</td><td><span class="var-tag">变量</span></td></tr>
+              <tr><td>5</td><td>各圈层详细方案</td><td>每层: 洞察→Key Message→推广手段×3-4</td><td><span class="fix-tag">固定结构</span> <span class="var-tag">内容变量</span></td></tr>
+              <tr><td>6</td><td>基础发行能力</td><td>区域化/AI/广告/数据 四大能力</td><td><span class="fix-tag">半固定</span></td></tr>
+              <tr><td>7</td><td>目标指标</td><td>上线前/首月/半年 KPI</td><td><span class="var-tag">变量</span></td></tr>
+              <tr><td>8</td><td>口碑备案</td><td>目标评分/警戒线/应对方案</td><td><span class="fix-tag">固定结构</span> <span class="var-tag">数值变量</span></td></tr>
+              <tr><td>9</td><td>预算分配</td><td>总额 + 各模块占比</td><td><span class="var-tag">变量</span></td></tr>
+              <tr><td>10</td><td>Roadmap时间线</td><td>各阶段策略+关键事件</td><td><span class="var-tag">变量</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="guide-section">
+          <h2>新游戏怎么填？一步步来</h2>
+          <div class="guide-steps">
+            <div class="guide-step"><div class="step-num">1</div><div class="step-content"><h4>填产品基础信息</h4><p>游戏名、发售时间、定价、平台、品类、美术风格。这些通常项目组已经确定了，直接填。</p><div class="step-tip">💡 如果还没确定发售时间，填预估窗口（如 "2026 Q3"）</div></div></div>
+            <div class="guide-step"><div class="step-num">2</div><div class="step-content"><h4>提炼3个核心卖点</h4><p>问自己：这个游戏和竞品比，最强的3个点是什么？用一句话说清每个卖点。</p><div class="step-tip">💡 参考格式："XXX品类中首个实现YYY的产品" / "比竞品ZZZ更好的AAA体验"</div></div></div>
+            <div class="guide-step"><div class="step-num">3</div><div class="step-content"><h4>画用户三层漏斗</h4><p><strong>核心层：</strong>最精准的目标用户（如：品类老玩家/前作用户）<br><strong>次核层：</strong>可转化的相邻品类用户（如：竞品玩家）<br><strong>泛用户：</strong>可能被吸引的泛游戏受众</p><div class="step-tip">💡 每层都要回答：他们是谁？规模多大？痛点是什么？用什么吸引他们？</div></div></div>
+            <div class="guide-step"><div class="step-num">4</div><div class="step-content"><h4>为每层设计推广手段</h4><p>每个圈层 3-4 个推广手段。每个手段要包含：<br>① 主标题（像广告语一样有冲击力）<br>② 执行描述（谁做什么、在哪个渠道、用什么内容）<br>③ KOL/媒体列表（具体到人名）<br>④ 话题标签（#xxx）</p><div class="step-tip">💡 不要写"找网红推广"这种空话，要写"邀请Welyn做24h生存挑战直播"这种具体方案</div></div></div>
+            <div class="guide-step"><div class="step-num">5</div><div class="step-content"><h4>定目标数字</h4><p>预注册/Wishlist → 首月DAU/销量 → 半年累计。每个数字要有依据（参考竞品数据或数科预估）。</p><div class="step-tip">💡 定两个档：基础目标（保守）+ 冲击目标（乐观）</div></div></div>
+            <div class="guide-step"><div class="step-num">6</div><div class="step-content"><h4>准备口碑预案</h4><p>提前想好：如果评分低于警戒线怎么办？负面舆论怎么应对？准备好媒体关系/社群引导/官方回应三条线。</p><div class="step-tip">💡 这部分很多人忽略，但上线第一天出问题时你会感谢自己提前准备了</div></div></div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h2>变量 vs 固定格式速查表</h2>
+          <table class="guide-table">
+            <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+            <tbody>
+              <tr><td>三层漏斗结构</td><td><span class="fix-tag">固定</span></td><td>永远是 核心→次核→泛 三层</td></tr>
+              <tr><td>每层的推广手段格式</td><td><span class="fix-tag">固定</span></td><td>标题+描述+渠道+KOL+话题</td></tr>
+              <tr><td>四大发行能力</td><td><span class="fix-tag">半固定</span></td><td>区域化/AI/广告/数据，可增减</td></tr>
+              <tr><td>口碑备案结构</td><td><span class="fix-tag">固定</span></td><td>目标→警戒线→应对三步</td></tr>
+              <tr><td>产品信息</td><td><span class="var-tag">变量</span></td><td>每个游戏完全不同</td></tr>
+              <tr><td>圈层人群定义</td><td><span class="var-tag">变量</span></td><td>根据游戏品类调整</td></tr>
+              <tr><td>推广手段内容</td><td><span class="var-tag">变量</span></td><td>KOL/渠道/话题完全不同</td></tr>
+              <tr><td>KPI数字</td><td><span class="var-tag">变量</span></td><td>根据产品量级定</td></tr>
+              <tr><td>预算比例</td><td><span class="var-tag">变量</span></td><td>根据总预算和策略侧重调整</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="guide-section">
+          <h2>快捷方式：用AI一键生成</h2>
+          <p>如果你不想手填，可以用本工具的 AI 功能：</p>
+          <ol>
+            <li>在首页填写游戏基础信息 + 回答7道访谈问题</li>
+            <li>点「🤖 AI自动生成」→ Claude 会按上述模板自动填充所有内容</li>
+            <li>点左侧「📄 方案」按钮 → 导出 Markdown 格式的完整方案</li>
+            <li>粘贴到飞书/Notion → 人工微调 → 分发给执行团队</li>
+          </ol>
+          <p class="guide-tip-box">⚠️ AI 生成的内容是起点而非终点。KOL 名单、预算数字、时间节点等需要根据实际情况人工校准。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PUBLISHING GUIDE SCREEN ═══ -->
+    <div class="guide-screen" id="guideScreen">
+      <div class="guide-doc">
+        <h1>🌐 海外 vs 国内 · 游戏发行运营差异指南</h1>
+        <p class="guide-subtitle">帮助团队快速理解两种市场的核心差异</p>
+
+        <div class="guide-section">
+          <h2>一句话总结</h2>
+          <div class="guide-callout">
+            <strong>海外：</strong>品牌驱动 + KOL生态 + 社区口碑 + Steam/主机<br>
+            <strong>国内：</strong>买量驱动 + 渠道为王 + 版号合规 + 移动端优先
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h2>核心差异对比</h2>
+          <table class="guide-table compare-table">
+            <thead><tr><th>维度</th><th>🌍 海外发行</th><th>🇨🇳 国内发行</th></tr></thead>
+            <tbody>
+              <tr><td><strong>分发平台</strong></td><td>Steam / Epic / PS / Xbox / App Store / Google Play</td><td>TapTap / 应用宝 / 华为 / 小米 / OPPO / vivo + 版号审批</td></tr>
+              <tr><td><strong>获客方式</strong></td><td>KOL种草 + Twitch/YouTube + 媒体评测 + 社区口碑</td><td>买量投放(巨量/广点通) + 渠道联运 + 预约导量</td></tr>
+              <tr><td><strong>社区阵地</strong></td><td>Discord / Reddit / Twitter / YouTube</td><td>微信群 / QQ群 / B站 / 抖音 / NGA / TapTap社区</td></tr>
+              <tr><td><strong>KOL生态</strong></td><td>YouTube长视频 + Twitch直播 + TikTok短视频</td><td>B站UP主 + 抖音达人 + 虎牙/斗鱼主播</td></tr>
+              <tr><td><strong>付费模式</strong></td><td>买断制/F2P+Battle Pass/纯装饰MTX（对P2W极度敏感）</td><td>F2P+内购为主/抽卡/月卡/Battle Pass（对P2W容忍度较高）</td></tr>
+              <tr><td><strong>媒体关系</strong></td><td>IGN/GameSpot/Polygon + Metacritic评分体系</td><td>游民/17173/机核 + TapTap评分 + B站口碑</td></tr>
+              <tr><td><strong>合规要求</strong></td><td>各区域分级(ESRB/PEGI/CERO) + 部分地区内容适配</td><td>版号(核心门槛) + 内容审查 + 防沉迷 + 实名认证</td></tr>
+              <tr><td><strong>展会/活动</strong></td><td>Gamescom / TGS / PAX / GDC / E3</td><td>ChinaJoy / WePlay / TGA中国 + 线下网吧</td></tr>
+              <tr><td><strong>本地化深度</strong></td><td>10+语言(英/法/德/西/葡/日/韩/俄/繁中等)</td><td>简体中文一种，但需适配方言梗/本土文化/审查要求</td></tr>
+              <tr><td><strong>数据工具</strong></td><td>SteamSpy / SteamDB / SensorTower / data.ai</td><td>七麦 / 蝉大师 / DataEye / 热云数据</td></tr>
+              <tr><td><strong>预算结构</strong></td><td>网红(30%)+广告(15%)+素材(20%)+展会(25%)+PR(10%)</td><td>买量(50-60%)+渠道(20%)+KOL(10%)+素材(10%)</td></tr>
+              <tr><td><strong>成功标准</strong></td><td>Metacritic 80+ / Steam好评率 / 长线留存</td><td>首日流水 / 买量ROI / 畅销榜排名</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="guide-section">
+          <h2>海外发行 · 关键要点</h2>
+          <div class="guide-cards-row">
+            <div class="guide-mini-card"><h4>🎬 内容为王</h4><p>海外玩家通过KOL视频/直播发现游戏。一条Welyn的Rust视频可以带来百万级曝光。投资创作者 > 投资广告。</p></div>
+            <div class="guide-mini-card"><h4>⭐ 口碑生死线</h4><p>Steam好评率/Metacritic评分决定生死。上线首周口碑必须守住，否则长线运营无从谈起。</p></div>
+            <div class="guide-mini-card"><h4>🏪 Steam是主战场</h4><p>PC端Steam占据绝对主导。Wishlist→Day1转化率是关键指标。Steam促销节奏要提前规划。</p></div>
+            <div class="guide-mini-card"><h4>🌐 区域差异大</h4><p>欧美/日韩/东南亚/拉美/中东——每个区域的KOL/渠道/付费习惯/文化敏感点完全不同。不能一套打天下。</p></div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h2>国内发行 · 关键要点</h2>
+          <div class="guide-cards-row">
+            <div class="guide-mini-card"><h4>📱 移动端优先</h4><p>中国市场手游占绝对主导。PC/主机是补充。如果产品有手游版本，国内策略应以手游为核心。</p></div>
+            <div class="guide-mini-card"><h4>📋 版号是生命线</h4><p>没有版号=不能变现。版号审批周期6-12个月，需提前规划。部分敏感内容（暴力/血腥/骷髅）需要修改。</p></div>
+            <div class="guide-mini-card"><h4>💰 买量是主引擎</h4><p>国内获客主要靠付费广告投放(巨量引擎/广点通)。买量素材的制作和A/B测试能力决定CPI和ROI。</p></div>
+            <div class="guide-mini-card"><h4>📺 B站是口碑阵地</h4><p>B站在国内扮演着YouTube+Reddit的双重角色。UP主的评测/攻略/实况视频是玩家发现游戏的核心渠道。</p></div>
+          </div>
+        </div>
+
+        <div class="guide-section">
+          <h2>同一款游戏，海外和国内怎么打？</h2>
+          <table class="guide-table">
+            <thead><tr><th>环节</th><th>海外打法</th><th>国内打法</th></tr></thead>
+            <tbody>
+              <tr><td><strong>预热期</strong></td><td>Steam页面上线→Wishlist积累→KOL Preview</td><td>TapTap预约→B站UP主预热→买量素材储备</td></tr>
+              <tr><td><strong>上线首日</strong></td><td>Twitch Drops+KOL直播+媒体评分+Steam首页</td><td>渠道推荐位+开屏广告+B站热搜+直播冲榜</td></tr>
+              <tr><td><strong>首月运营</strong></td><td>社区维护+Bug修复+口碑管理+长线内容预告</td><td>买量冲量+活动拉收+渠道返量+社群维护</td></tr>
+              <tr><td><strong>长线运营</strong></td><td>赛季更新+KOL持续合作+社区活动+展会亮相</td><td>版本更新+节日活动+联动+买量持续优化</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="guide-section">
+          <h2>常见坑：海外团队做国内 / 国内团队做海外</h2>
+          <div class="guide-pitfall"><span class="pitfall-icon">❌</span><div><strong>国内团队做海外常见错误</strong><p>1. 直接翻译国内买量素材投海外（文化不适配）<br>2. 忽视KOL和社区，纯靠广告投放（海外口碑>买量）<br>3. 在海外搞P2W付费设计（会被社区暴击）<br>4. 不做区域差异化（一套素材打全球）</p></div></div>
+          <div class="guide-pitfall"><span class="pitfall-icon">❌</span><div><strong>海外团队做国内常见错误</strong><p>1. 忽视版号导致无法变现（版号审批需6-12个月）<br>2. 不了解安卓渠道生态（华米OV各有规则）<br>3. 低估买量的重要性（国内自然量占比远低于海外）<br>4. 不做防沉迷/实名认证适配（合规红线）</p></div></div>
+        </div>
+
+        <div class="guide-section">
+          <h2>推荐学习资源</h2>
+          <div class="guide-cards-row">
+            <div class="guide-mini-card"><h4>📖 海外发行</h4><p>· GDC Vault（免费演讲录像）<br>· GameDiscoverCo（行业Newsletter）<br>· Derek Lieu（预告片策略分析）<br>· Niko Partners（亚太游戏报告）</p></div>
+            <div class="guide-mini-card"><h4>📖 国内发行</h4><p>· DataEye（买量数据报告）<br>· 游戏葡萄/GameLook（行业资讯）<br>· 七麦/蝉大师（应用数据）<br>· ChinaJoy（行业展会）</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 <!-- Reference Side Panel -->
 <div class="ref-overlay" id="refOverlay" onclick="closeRefPanel()"></div>

@@ -1114,8 +1114,19 @@ switchNav = function(nav) {
   document.getElementById('dashboardScreen')?.classList.remove('active');
   document.getElementById('setupScreen')?.classList.remove('active');
   document.getElementById('analysisScreen')?.classList.remove('active');
+  document.getElementById('templateScreen')?.classList.remove('active');
+  document.getElementById('guideScreen')?.classList.remove('active');
 
   document.querySelectorAll('.sb-nav-item').forEach(b => b.classList.toggle('active', b.dataset.nav === nav));
+
+  if (nav === 'template') {
+    document.getElementById('templateScreen').classList.add('active');
+    return;
+  }
+  if (nav === 'guide') {
+    document.getElementById('guideScreen').classList.add('active');
+    return;
+  }
 
   if (nav === 'analysis') {
     if (!projectData) { document.getElementById('setupScreen').classList.add('active'); return; }
