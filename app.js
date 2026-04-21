@@ -266,63 +266,7 @@ async function aiGeneratePlan() {
 
   showAiStatus('正在连接 Claude API...');
 
-  const systemPrompt = `你是一个游戏发行运营专家。用户会给你一个游戏的名称和基本信息。你需要生成一份完整的游戏运营分析数据，严格按照以下JSON格式输出（不要输出其他任何内容，只输出纯JSON）。
-
-JSON结构如下：
-{
-  "projectData": {
-    "name": "游戏名",
-    "tags": ["标签1", "标签2", "标签3", "标签4", "标签5"],
-    "phases": {
-      "cbt": {
-        "title": "CBT 封闭测试",
-        "duration": "周期",
-        "objective": "核心目标",
-        "cards": [
-          {"id":"c1","type":"event/campaign/tvc/kv/ua/aigc","title":"标题","desc":"描述(50-100字)","priority":"high/mid/low","tags":["标签"],"timing":"排期","refCount":3,"role":{"community":true,"ua":false,"visual":false}}
-        ]
-      },
-      "ea": { "title":"EA 抢先体验", "duration":"", "objective":"", "cards":[] },
-      "soft": { "title":"Soft Launch", "duration":"", "objective":"", "cards":[] },
-      "global": { "title":"Global Launch", "duration":"", "objective":"", "cards":[] }
-    }
-  },
-  "analysis": {
-    "coreFeatures": [
-      {"icon":"emoji","title":"特点名","desc":"描述(50-80字)","marketingAngle":"营销切入点(50-80字)","tags":["标签"]}
-    ],
-    "competitors": [
-      {"name":"竞品名","icon":"emoji","positioning":"一句话定位","comparison":[
-        {"dimension":"维度","us":"我方","them":"对方","advantage":"us/them/tie"}
-      ],"communityLeverage":"社群撬动策略(100-150字)"}
-    ],
-    "communityStrategies": [
-      {"icon":"emoji","title":"策略名","problem":"问题","solution":"策略","actions":["动作1","动作2","动作3","动作4"],"kpi":"目标:xxx"}
-    ]
-  },
-  "audience": {
-    "funnel": {"core":"百分比","broad":"百分比","casual":"百分比"},
-    "segments": [
-      {"tier":"core/broad/casual","label":"标签","size":"占比说明","color":"var(--accent-red)/var(--accent-orange)/var(--accent-green)",
-       "portrait":{"who":"","age":"","behavior":"","motivation":"","spend":""},
-       "strategy":[{"action":"动作名","detail":"详细说明"}],
-       "uaApproach":"获客思路","contentStyle":"内容风格"}
-    ]
-  },
-  "regional": [
-    {"region":"区域名","icon":"emoji","playerBase":"","overview":"","keyInsights":["洞察1"],"strategy":[{"action":"","detail":""}],"kpi":"","timing":""}
-  ]
-}
-
-要求：
-1. 每个阶段(cbt/ea/soft/global)至少5张运营卡片
-2. 核心特点至少5个
-3. 竞品至少3个（选该品类最相关的）
-4. 社群策略至少5个
-5. 人群分析三层（核心/泛/非核心）
-6. 区域打法至少3个区域
-7. 所有内容必须基于真实的游戏行业知识
-8. 只输出JSON，不要markdown或其他格式`;
+  const systemPrompt = typeof MARKET_PLAN_PROMPT !== 'undefined' ? MARKET_PLAN_PROMPT : '请以JSON格式输出游戏运营分析';
 
   // Collect interview answers
   const getSelected = (id) => [...document.querySelectorAll(`#${id} .tag-btn.selected`)].map(b => b.dataset.value);
@@ -372,7 +316,7 @@ ${iqExtra ? '补充信息: ' + iqExtra : ''}
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 8000,
+        max_tokens: 16000,
         messages: [
           { role: 'user', content: systemPrompt + '\n\n' + userMsg }
         ]
@@ -428,6 +372,7 @@ function applyAiResult(ai, gameName) {
   window._AI_DIFF = null; // AI doesn't generate diff map
   window._AI_REFS = {}; // No refs for AI
   window._AI_AIGC = {}; // No AIGC for AI
+  window._AI_MARKET_PLAN = ai.marketPlan || null;
 
   projectData = pd;
 
@@ -822,6 +767,114 @@ function exportAs(format) {
     });
     downloadFile(brief, `${projectData.name}_执行Brief_${phaseData.title}.md`, 'text/markdown;charset=utf-8');
   }
+}
+
+// ─── Export Market Plan as Markdown ───
+function exportMarketPlan() {
+  const mp = window._AI_MARKET_PLAN;
+  if (!mp) { alert('没有市场方案数据。请先用AI生成分析。'); return; }
+  const p = mp.productOverview || {};
+  let md = `# ${p.name || projectData?.name || '游戏'} — 市场发行策略方案\n\n`;
+  md += `> 由 GameOps Planner AI 自动生成 · ${new Date().toLocaleDateString('zh-CN')}\n\n---\n\n`;
+
+  // 1. Product Overview
+  md += `## 一、产品概况\n\n`;
+  md += `| 项目 | 内容 |\n|---|---|\n`;
+  md += `| 产品名称 | ${p.name||''} |\n`;
+  md += `| 发售时间 | ${p.releaseDate||''} |\n`;
+  md += `| 定价策略 | ${p.pricing||''} |\n`;
+  md += `| 平台 | ${(p.platforms||[]).join(' / ')} |\n`;
+  md += `| 品类 | ${p.genre||''} |\n`;
+  md += `| 美术风格 | ${p.artStyle||''} |\n\n`;
+  md += `**核心卖点:** ${(p.coreSellingPoints||[]).join(' · ')}\n\n`;
+  if (p.contentRoadmap) {
+    md += `### 内容Roadmap\n\n| 阶段 | 时间 | 内容 |\n|---|---|---|\n`;
+    p.contentRoadmap.forEach(r => md += `| ${r.phase} | ${r.time} | ${r.content} |\n`);
+    md += '\n';
+  }
+  md += `**产品定位:** ${mp.positioningStatement||''}\n\n`;
+
+  // 2. Market Opportunities & Challenges
+  md += `## 二、市场机会与挑战\n\n`;
+  md += `### 市场机会\n${(mp.marketOpportunities||[]).map((o,i)=>`${i+1}. ${o}`).join('\n')}\n\n`;
+  md += `### 市场挑战\n${(mp.marketChallenges||[]).map((c,i)=>`${i+1}. ${c}`).join('\n')}\n\n---\n\n`;
+
+  // 3. Audience Layers
+  (mp.audienceLayers||[]).forEach((layer, li) => {
+    md += `## ${li===0?'三':li===1?'四':li===2?'五':'六'}、${layer.layerName}：${layer.targetGroup}\n\n`;
+    md += `- ${layer.icon} **目标人群:** ${layer.targetGroup}\n`;
+    md += `- **用户规模:** ${layer.userScale||''}\n`;
+    md += `- **预估转化:** ${layer.conversionEstimate||''}\n\n`;
+
+    if (layer.userInsight) {
+      md += `### 用户洞察\n\n`;
+      md += `| 痛点 | 吸引点 |\n|---|---|\n`;
+      const pains = layer.userInsight.painPoints || [];
+      const attrs = layer.userInsight.attractions || [];
+      const rows = Math.max(pains.length, attrs.length);
+      for (let r=0; r<rows; r++) md += `| ${pains[r]||''} | ${attrs[r]||''} |\n`;
+      md += '\n';
+    }
+
+    md += `**Key Message:** ${layer.keyMessage||''}\n\n`;
+    md += `**沟通策略:** ${layer.communicationStrategy||''}\n\n`;
+
+    (layer.promotionTactics||[]).forEach((t, ti) => {
+      md += `### 推广手段 ${ti+1}: ${t.tacticName}\n\n`;
+      md += `> **${t.headline}**\n\n`;
+      md += `${t.description}\n\n`;
+      if (t.channels?.length) md += `- **渠道:** ${t.channels.join(' / ')}\n`;
+      if (t.kolExamples?.length) md += `- **KOL/媒体:** ${t.kolExamples.join(' / ')}\n`;
+      if (t.contentDirections?.length) md += `- **内容方向:** ${t.contentDirections.join(' / ')}\n`;
+      if (t.socialTopics?.length) md += `- **话题:** ${t.socialTopics.join('  ')}\n`;
+      md += '\n';
+    });
+    md += '---\n\n';
+  });
+
+  // 4. Building Capabilities
+  md += `## 基础发行能力建设\n\n`;
+  (mp.buildingCapabilities||[]).forEach((bc, i) => {
+    md += `### ${i+1}. ${bc.title}\n\n${bc.description}\n\n`;
+    md += `**关键动作:**\n${(bc.keyActions||[]).map(a=>`- ${a}`).join('\n')}\n\n`;
+  });
+
+  // 5. KPI
+  md += `## 参照指标\n\n`;
+  const kpi = mp.kpiTargets||{};
+  md += `| 阶段 | 指标 | 目标 | 说明 |\n|---|---|---|---|\n`;
+  ['prelaunch','firstMonth','sixMonth'].forEach(k => {
+    if (kpi[k]) md += `| ${k==='prelaunch'?'上线前':k==='firstMonth'?'首月':'半年'} | ${kpi[k].metric||''} | ${kpi[k].target||''} | ${kpi[k].breakdown||''} |\n`;
+  });
+  md += '\n';
+
+  // 6. Reputation
+  if (mp.reputationPlan) {
+    md += `## 口碑备案\n\n`;
+    md += `- **目标评分:** ${mp.reputationPlan.targetScore||''}\n`;
+    md += `- **警戒线:** ${mp.reputationPlan.warningLine||''}\n`;
+    md += `- **应对措施:**\n${(mp.reputationPlan.countermeasures||[]).map(c=>`  - ${c}`).join('\n')}\n\n`;
+  }
+
+  // 7. Budget
+  if (mp.budgetAllocation) {
+    md += `## 市场预算\n\n`;
+    md += `**总预算:** ${mp.budgetAllocation.totalBudget||''}\n\n`;
+    md += `| 类别 | 占比 | 说明 |\n|---|---|---|\n`;
+    (mp.budgetAllocation.breakdown||[]).forEach(b => md += `| ${b.category} | ${b.percentage} | ${b.description} |\n`);
+    md += '\n';
+  }
+
+  // 8. Roadmap
+  if (mp.roadmap) {
+    md += `## 市场Roadmap\n\n`;
+    md += `| 阶段 | 时间 | 核心TA | 策略 | 关键事件 |\n|---|---|---|---|---|\n`;
+    mp.roadmap.forEach(r => md += `| ${r.phase} | ${r.timeRange} | ${r.coreTA} | ${r.strategy} | ${(r.keyEvents||[]).join('; ')} |\n`);
+    md += '\n';
+  }
+
+  downloadFile(md, `${p.name||'Game'}_市场发行策略方案.md`, 'text/markdown;charset=utf-8');
+  showToast('📄 市场方案已导出');
 }
 
 function downloadFile(content, filename, mime) {
