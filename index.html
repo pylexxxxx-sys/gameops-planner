@@ -8,29 +8,60 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app-container">
-  <!-- ═══ TOP NAV ═══ -->
-  <nav class="top-nav">
-    <div class="brand"><div class="icon">▸</div><span>GameOps</span><span class="brand-dim">Planner</span><span class="data-date">live · 2026.04.14</span></div>
-    <div class="nav-links" id="navLinks">
-      <button class="active" data-nav="dashboard" onclick="switchNav('dashboard')">📊 运营看板</button>
-      <button data-nav="analysis" onclick="switchNav('analysis')">🎯 游戏分析</button>
-      <button data-nav="timeline" onclick="switchNav('timeline')">📅 时间轴</button>
-      <button data-nav="references" onclick="switchNav('references')">🔍 参考库</button>
-      <button data-nav="collection" onclick="switchNav('collection')">📂 素材收藏 <span class="collect-badge" id="collectBadge"></span></button>
+<div class="app-layout">
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sb-logo">▸</div>
+      <div class="sb-title">GameOps<span class="sb-dim">Planner</span></div>
     </div>
-    <div class="nav-right">
-      <div class="role-switcher" id="roleSwitcher">
-        <button class="active" data-role="all" onclick="switchRole('all')">全局视图</button>
-        <button data-role="community" onclick="switchRole('community')">社区运营</button>
-        <button data-role="ua" onclick="switchRole('ua')">UA买量</button>
-        <button data-role="visual" onclick="switchRole('visual')">素材制作</button>
-      </div>
-      <button class="btn-export" onclick="openExportModal()">📤 一键导出</button>
-    </div>
-  </nav>
 
-  <div class="main-content">
+    <!-- Project Selector -->
+    <div class="sb-section">
+      <div class="sb-label">项目</div>
+      <div class="sb-project-list" id="sbProjectList">
+        <div class="sb-project active" data-proj="home" onclick="sidebarNav('home')"><span class="sb-proj-icon">🏠</span><span>首页</span></div>
+        <div class="sb-project" data-proj="poe2" onclick="loadPoe2Preset()"><span class="sb-proj-icon">⚔️</span><span>Path of Exile 2</span></div>
+        <div class="sb-project" data-proj="rust" onclick="loadRustPreset()"><span class="sb-proj-icon">🏗️</span><span>RUST / Mobile</span></div>
+        <div class="sb-project" data-proj="hunt" onclick="loadHuntPreset()"><span class="sb-proj-icon">🤠</span><span>Hunt: Showdown</span></div>
+      </div>
+      <div class="sb-saved-list" id="sbSavedList"></div>
+      <button class="sb-add-btn" onclick="sidebarNav('create')">+ 新建项目</button>
+    </div>
+
+    <!-- Module Navigation -->
+    <div class="sb-section sb-modules" id="sbModules" style="display:none;">
+      <div class="sb-label">模块</div>
+      <div class="sb-nav" id="navLinks">
+        <button class="sb-nav-item active" data-nav="dashboard" onclick="switchNav('dashboard')"><span class="sb-nav-icon">📊</span> 运营看板</button>
+        <button class="sb-nav-item" data-nav="analysis" onclick="switchNav('analysis')"><span class="sb-nav-icon">🎯</span> 游戏分析</button>
+        <button class="sb-nav-item" data-nav="timeline" onclick="switchNav('timeline')"><span class="sb-nav-icon">📅</span> 时间轴</button>
+        <button class="sb-nav-item" data-nav="references" onclick="switchNav('references')"><span class="sb-nav-icon">🔍</span> 参考库</button>
+        <button class="sb-nav-item" data-nav="collection" onclick="switchNav('collection')"><span class="sb-nav-icon">📂</span> 素材收藏 <span class="collect-badge" id="collectBadge"></span></button>
+      </div>
+    </div>
+
+    <!-- Role Filter -->
+    <div class="sb-section sb-roles" id="sbRoles" style="display:none;">
+      <div class="sb-label">视角</div>
+      <div class="sb-nav" id="roleSwitcher">
+        <button class="sb-nav-item small active" data-role="all" onclick="switchRole('all')">全局</button>
+        <button class="sb-nav-item small" data-role="community" onclick="switchRole('community')">社区运营</button>
+        <button class="sb-nav-item small" data-role="ua" onclick="switchRole('ua')">UA买量</button>
+        <button class="sb-nav-item small" data-role="visual" onclick="switchRole('visual')">素材制作</button>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="sb-footer">
+      <button class="sb-export-btn" onclick="openExportModal()">📤 导出</button>
+      <div class="sb-clock"><span class="clock-dot"></span><span id="liveClock">--:--</span></div>
+    </div>
+  </aside>
+
+  <!-- ═══ RIGHT CONTENT ═══ -->
+  <main class="content-pane">
+    <div class="main-content">
     <!-- ═══ SETUP SCREEN ═══ -->
     <div class="setup-screen active" id="setupScreen">
       <!-- HERO -->

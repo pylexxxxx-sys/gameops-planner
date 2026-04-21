@@ -7,6 +7,49 @@ let currentRole = 'all';
 let projectData = null;
 let currentProjectType = 'poe2';
 
+// ─── Sidebar navigation ───
+function sidebarNav(view) {
+  // Update project highlights
+  document.querySelectorAll('.sb-project').forEach(p => p.classList.toggle('active', p.dataset.proj === view));
+
+  if (view === 'home' || view === 'create') {
+    document.getElementById('setupScreen')?.classList.add('active');
+    document.getElementById('dashboardScreen')?.classList.remove('active');
+    document.getElementById('analysisScreen')?.classList.remove('active');
+    document.getElementById('collectionScreen')?.classList.remove('active');
+    document.getElementById('sbModules').style.display = 'none';
+    document.getElementById('sbRoles').style.display = 'none';
+    if (view === 'create') {
+      // Scroll to create section
+      setTimeout(() => document.querySelector('.create-section')?.scrollIntoView({behavior:'smooth'}), 100);
+    }
+    return;
+  }
+}
+
+function showSidebarModules() {
+  document.getElementById('sbModules').style.display = 'block';
+  document.getElementById('sbRoles').style.display = 'block';
+  // Highlight active project in sidebar
+  document.querySelectorAll('.sb-project').forEach(p => {
+    p.classList.toggle('active', p.dataset.proj === currentProjectType);
+  });
+}
+
+function renderSidebarSaved() {
+  const projects = getSavedProjects();
+  const list = document.getElementById('sbSavedList');
+  if (!list) return;
+  list.innerHTML = projects.map(p => `
+    <div class="sb-saved-item" onclick="loadSavedProject('${p.key}')">
+      <span class="sb-proj-icon">🤖</span>
+      <span>${p.name}</span>
+      <span class="sb-saved-del" onclick="event.stopPropagation();deleteSavedProject('${p.key}',event);renderSidebarSaved();renderSavedProjectsNew();">✕</span>
+    </div>
+  `).join('');
+}
+renderSidebarSaved();
+
 // ─── Tag selectors ───
 document.querySelectorAll('.tag-selector:not(.single) .tag-btn').forEach(btn => {
   btn.addEventListener('click', () => btn.classList.toggle('selected'));
@@ -396,6 +439,8 @@ function applyAiResult(ai, gameName) {
   // Switch screens
   document.getElementById('setupScreen').classList.remove('active');
   document.getElementById('dashboardScreen').classList.add('active');
+  showSidebarModules();
+  renderSidebarSaved();
 
   // Hide steam dashboard for AI projects
   const steamEl = document.getElementById('steamDashboard');
@@ -529,6 +574,7 @@ function generatePlan() {
 
   document.getElementById('setupScreen').classList.remove('active');
   document.getElementById('dashboardScreen').classList.add('active');
+  showSidebarModules();
 
   // Steam dashboard — all projects
   const steamEl = document.getElementById('steamDashboard');
@@ -632,7 +678,7 @@ function renderPhaseCards() {
 // ─── Role switching ───
 function switchRole(role) {
   currentRole = role;
-  document.querySelectorAll('#roleSwitcher button').forEach(b => b.classList.toggle('active', b.dataset.role === role));
+  document.querySelectorAll('#roleSwitcher .sb-nav-item').forEach(b => b.classList.toggle('active', b.dataset.role === role));
   // Toggle highlights
   ['All','Community','Ua','Visual'].forEach(r => {
     const el = document.getElementById('highlight' + r);
@@ -724,7 +770,7 @@ function copyPrompt(btn, text) {
 
 // ─── Nav switching ───
 function switchNav(nav) {
-  document.querySelectorAll('#navLinks button').forEach(b => b.classList.toggle('active', b.dataset.nav === nav));
+  document.querySelectorAll('.sb-nav-item').forEach(b => b.classList.toggle('active', b.dataset.nav === nav));
   if (nav === 'references' && projectData) {
     openRefPanel(currentPhase, 'all', projectData.phases[currentPhase]?.title);
   }
@@ -1016,7 +1062,7 @@ switchNav = function(nav) {
   document.getElementById('setupScreen')?.classList.remove('active');
   document.getElementById('analysisScreen')?.classList.remove('active');
 
-  document.querySelectorAll('#navLinks button').forEach(b => b.classList.toggle('active', b.dataset.nav === nav));
+  document.querySelectorAll('.sb-nav-item').forEach(b => b.classList.toggle('active', b.dataset.nav === nav));
 
   if (nav === 'analysis') {
     if (!projectData) { document.getElementById('setupScreen').classList.add('active'); return; }
