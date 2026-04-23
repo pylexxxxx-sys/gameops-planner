@@ -50,15 +50,20 @@ function renderSidebarSaved() {
 }
 renderSidebarSaved();
 
-// ─── Tag selectors ───
-document.querySelectorAll('.tag-selector:not(.single) .tag-btn').forEach(btn => {
-  btn.addEventListener('click', () => btn.classList.toggle('selected'));
-});
-document.querySelectorAll('.tag-selector.single .tag-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.closest('.tag-selector').querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+// ─── Tag selectors (event delegation) ───
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.tag-btn');
+  if (!btn) return;
+  const selector = btn.closest('.tag-selector');
+  if (!selector) return;
+  // Skip if btn has its own onclick (inline)
+  if (btn.hasAttribute('onclick')) return;
+  if (selector.classList.contains('single')) {
+    selector.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
-  });
+  } else {
+    btn.classList.toggle('selected');
+  }
 });
 
 // ─── Load PoE2 Preset ───
