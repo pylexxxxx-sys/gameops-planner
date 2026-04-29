@@ -9,22 +9,24 @@
   --bg-hover: #1f262e;
   --border-primary: #30363d;
   --border-accent: #484f58;
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #484f58;
-  --accent-gold: #d29922;
-  --accent-gold-dim: #9e6a03;
-  --accent-copper: #c87533;
-  --accent-blue: #58a6ff;
-  --accent-purple: #bc8cff;
-  --accent-green: #3fb950;
-  --accent-red: #f85149;
-  --accent-orange: #d18616;
-  --accent-cyan: #39d353;
-  --phase-cbt: #bc8cff;
-  --phase-ea: #58a6ff;
-  --phase-soft: #d29922;
-  --phase-global: #f85149;
+  /* text tuned for WCAG AA on dark background */
+  --text-primary: #f0f6fc;
+  --text-secondary: #c9d1d9;
+  --text-tertiary: #a8b2bd;
+  --text-muted: #8b949e;
+  --accent-gold: #e3b341;
+  --accent-gold-dim: #d29922;
+  --accent-copper: #e08a3c;
+  --accent-blue: #79c0ff;
+  --accent-purple: #d2a8ff;
+  --accent-green: #56d364;
+  --accent-red: #ff6b63;
+  --accent-orange: #e6933e;
+  --accent-cyan: #56d4dd;
+  --phase-cbt: #d2a8ff;
+  --phase-ea: #79c0ff;
+  --phase-soft: #e3b341;
+  --phase-global: #ff6b63;
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
@@ -32,17 +34,35 @@
   --shadow-md: 0 2px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 4px 24px rgba(0,0,0,0.5);
   --transition: all 0.2s ease;
-  --font-main: 'JetBrains Mono', 'Noto Sans SC', monospace;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* 中文走系统字体栈，代码/标签才用等宽 */
+  --font-main: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Courier New', monospace;
   --font-pixel: 'Press Start 2P', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 13px; scroll-behavior: smooth; }
-body { font-family: var(--font-main); background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; line-height: 1.7; }
-::-webkit-scrollbar { width: 6px; height: 6px; }
+html { font-size: 15px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body {
+  font-family: var(--font-main);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+/* 段落/正文类内容 */
+p, li, td, th, dd, dt { line-height: 1.7; }
+
+/* 代码/等宽字体：仅数字、英文、标签 */
+code, kbd, pre, samp,
+.font-mono, [class*="font-mono"] { font-family: var(--font-mono); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 button { font-family: var(--font-main); cursor: pointer; border: none; background: none; color: var(--text-primary); }
 
 /* ═══ LAYOUT — Sidebar + Content ═══ */
@@ -776,4 +796,157 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
   .asset-overview-row { grid-template-columns: 1fr; }
   .asset-cat-meta { grid-template-columns: 1fr; }
   .asset-pillar-row { grid-template-columns: 40px 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   READABILITY PATCH v2 — 统一字号下限 · 提升对比度 · 中文不等宽
+   此区块声明在文件末尾，具备最高优先级，覆盖前述样式
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1) 字号下限：所有 < 0.78rem 的正文统一抬到 0.78rem（≈ 11.7px） */
+.sb-saved-item { font-size: 0.82rem; color: var(--text-tertiary); font-family: var(--font-main); }
+.sb-nav-item.small { font-size: 0.82rem; }
+.sb-clock { font-size: 0.78rem; color: var(--text-tertiary); }
+.hero-stat-label { font-size: 0.78rem; color: var(--text-tertiary); }
+.preset-btn { font-size: 0.82rem; }
+.live-clock-bar { font-size: 0.82rem; color: var(--text-secondary); }
+.saved-item-date { font-size: 0.78rem; color: var(--text-tertiary); }
+.saved-del { font-size: 0.78rem; }
+.project-tag { font-size: 0.8rem; color: var(--text-tertiary); }
+.phase-duration { font-size: 0.78rem; opacity: 0.9; }
+.gantt-row-track .segment { font-size: 0.8rem; }
+.ops-card-tag { font-size: 0.78rem; color: var(--text-tertiary); }
+.ops-card-footer .timing { font-size: 0.82rem; color: var(--text-tertiary); }
+.ops-card-footer .ref-count { font-size: 0.82rem; }
+.ref-item-badge { font-size: 0.78rem; }
+.ref-tag { font-size: 0.78rem; color: var(--text-tertiary); }
+.metric-row { font-size: 0.85rem; color: var(--text-secondary); }
+.aigc-prompt-card { font-size: 0.85rem; line-height: 1.75; color: var(--text-secondary); }
+.copy-btn { font-size: 0.78rem; color: var(--text-tertiary); }
+.var-tag, .fix-tag { font-size: 0.78rem; }
+.step-tip { font-size: 0.85rem; }
+.bh-label { font-size: 0.8rem; color: var(--text-tertiary); width: 100px; min-width: 100px; }
+.angle-label { font-size: 0.85rem; }
+.comp-header-row { font-size: 0.82rem; color: var(--text-tertiary); }
+.dot-label { font-size: 0.78rem; }
+.collect-badge { font-size: 0.78rem; }
+.cat-count { font-size: 0.78rem; color: var(--text-tertiary); }
+.collect-card-cat { font-size: 0.78rem; }
+.collect-star-btn { font-size: 0.82rem; }
+.picker-title { font-size: 0.85rem; color: var(--text-secondary); }
+.picker-options button { font-size: 0.82rem; color: var(--text-secondary); }
+
+/* 2) 中文友好：正文块、描述、分析文字走系统字体栈 */
+.ops-card h4,
+.ops-card p,
+.ref-item-title,
+.ref-item-desc,
+.analysis-section p,
+.analysis-section-header h2,
+.analysis-section-header p,
+.feature-card .f-title,
+.feature-card .f-desc,
+.feature-card .f-angle,
+.seg-label,
+.seg-portrait .p-val,
+.region-action-title,
+.region-action-detail,
+.bh-content,
+.bh-pillar-items,
+.diff-position-text,
+.strategy-card,
+.saved-item-name,
+.sb-project,
+.sb-nav-item,
+.sb-saved-item,
+.sb-add-btn,
+.pcard-info h3,
+.pcard-info p,
+.hero-tagline,
+.form-group label,
+.iq-group label,
+.tag-btn,
+.preset-hint,
+.live-clock-bar,
+.interview-header,
+.saved-item,
+.ai-section-header,
+.ai-status,
+.btn-ai,
+.btn-primary,
+.form-input,
+.section-title,
+.term-line {
+  font-family: var(--font-main);
+  letter-spacing: 0.01em;
+}
+
+/* 等宽字体仅保留给：数字、代码、英文标签、logo */
+.sb-logo,
+.sb-title,
+.hero-stat-num,
+.aigc-prompt-card,
+code, kbd, pre, samp,
+.chip,
+.sb-label,
+.pcard-tags span {
+  font-family: var(--font-mono);
+}
+
+/* 3) 文字颜色：把 text-muted 的纯描述性文字改成 tertiary，避免"灰得看不清" */
+.ops-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.75; margin-bottom: 12px; }
+.ops-card h4 { color: var(--text-primary); font-size: 1rem; font-weight: 700; line-height: 1.5; margin-bottom: 8px; }
+.ref-item-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; }
+.ref-item-title { color: var(--text-primary); font-size: 0.98rem; font-weight: 700; }
+.analysis-section-header h2 { color: var(--text-primary); font-size: 1.3rem; font-weight: 800; line-height: 1.4; }
+.analysis-section-header p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+
+/* 4) Asset Plan 模块的精细化优化 */
+.asset-ov-key { font-size: 0.82rem; color: var(--text-tertiary); font-weight: 600; }
+.asset-ov-val { font-size: 0.95rem; color: var(--text-primary); line-height: 1.7; }
+.asset-cat-title { font-size: 1.2rem; font-family: var(--font-main); letter-spacing: 0; }
+.asset-cat-positioning { font-size: 0.88rem; color: var(--text-secondary); }
+.asset-meta-item .m-key { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 600; }
+.asset-meta-item .m-val { font-size: 0.9rem; color: var(--text-primary); line-height: 1.65; }
+.asset-pillar-name { font-size: 1.02rem; font-family: var(--font-main); }
+.asset-pillar-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+.asset-pillar-row { font-size: 0.88rem; grid-template-columns: 58px 1fr; padding: 6px 0; }
+.asset-pillar-row .pr-k { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 600; padding-top: 4px; }
+.asset-pillar-row .pr-v { line-height: 1.7; color: var(--text-primary); }
+.asset-pillar-row .chip { font-size: 0.78rem; padding: 3px 10px; }
+.asset-ex-list { padding-left: 18px; gap: 4px; }
+.asset-ex-list li { font-size: 0.9rem; color: var(--text-secondary); }
+.asset-synergy-title { font-size: 1.02rem; }
+.asset-synergy-flow { font-size: 0.88rem; }
+.asset-synergy-mech { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* 5) 卡片内边距放大：给每个 ops/ref 卡片留一点呼吸感 */
+.ops-card { padding: 18px 20px; }
+
+/* 6) 分析区域标题行间距调整 */
+.analysis-section { margin-bottom: 28px; }
+.analysis-section-header { gap: 14px; margin-bottom: 18px; }
+
+/* 7) Sidebar 可读性 */
+.sb-nav-item { font-size: 0.92rem; padding: 8px 12px; letter-spacing: 0.01em; }
+.sb-project { font-size: 0.92rem; padding: 8px 12px; }
+.sb-section-title { color: var(--text-tertiary); font-weight: 700; letter-spacing: 0.05em; }
+
+/* 8) 表单/输入可读 */
+.form-input, .tag-btn { font-size: 0.92rem; }
+.tag-btn { padding: 6px 12px; }
+
+/* 9) 链接底色强化 */
+a { color: var(--accent-blue); }
+a:hover { color: #a5d6ff; text-decoration: underline; }
+
+/* 10) 选中文本 */
+::selection { background: rgba(86,211,100,0.3); color: var(--text-primary); }
+
+/* 11) 移动端进一步优化 */
+@media (max-width: 768px) {
+  html { font-size: 14.5px; }
+  .main-content { padding: 16px 18px; }
+  .analysis-section-header h2 { font-size: 1.1rem; }
+  .asset-pillar-row { grid-template-columns: 50px 1fr; }
 }
