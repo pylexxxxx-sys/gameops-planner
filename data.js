@@ -1088,3 +1088,176 @@ const HUNT_BRAND_HOUSE = {
   foundation: { label:"底层支撑", items:["Crytek引擎技术力","1896大更新品质飞跃","Psychoghost/Neenoh创作者","Twitch Drops皮肤经济","恐怖/哥特IP联动潜力"], color:"var(--accent-green)" },
   audiences: { label:"目标人群", items:["核心: 500h+老猎人 (25%)","泛用户: CoD/Tarkov迁移者 (35%)","非核心: 恐怖内容消费者 (40%)"], color:"var(--accent-blue)" }
 };
+
+// ═══════════════════════════════════════════════════════════════
+// RUST — 素材规划 (3 大类：运营社群 / 品牌大素材 / UA 买量)
+// 面向 Rust Mobile 发行 + Rust PC 长线并行
+// ═══════════════════════════════════════════════════════════════
+const RUST_ASSET_PLAN = {
+  overview: {
+    goal: "Rust Mobile 首曝→全球公测全周期，PC 长线联动，形成「社群温度 + 品牌势能 + 买量转化」三位一体素材矩阵",
+    principle: "社群素材抓温度 · 品牌素材抓势能 · 买量素材抓转化 — 三类素材互为原料，不重复生产",
+    ratio: "按投入占比约：社群 30% · 品牌 30% · 买量 40%（公测前 2 个月买量拉到 55%）",
+    kpi: "社群看互动率/UGC 产出 · 品牌看曝光/搜索词 · 买量看 CPI/ROAS/D7 留存"
+  },
+  // ───────────────── 1. 运营社群素材 ─────────────────
+  community: {
+    label: "运营社群素材",
+    icon: "💬",
+    color: "var(--accent-green)",
+    positioning: "低成本 · 高频次 · 强互动 · 养温度",
+    target: "Discord / X(Twitter) / Reddit / TikTok 官号 / 微信社群 / B站官号",
+    production: "以内部团队 + AIGC + 玩家 UGC 再剪辑为主，单条成本 < ¥3K",
+    frequency: "Discord 每日 · X 每日 2-3 条 · TikTok/Reels 每周 5-7 条 · 长视频每月 1 条",
+    audience: "核心 500h+ 老玩家 + 现有 Discord 50K 成员 + 创作者圈",
+    pillars: [
+      {
+        name: "开发日志 DevLog",
+        desc: "每周/双周发布 Rust Mobile 开发进度，展示从 PC 移植过程的技术细节、踩坑复盘",
+        formats: ["短视频 30-60s", "图文长推", "Discord 内部直播"],
+        cadence: "每周 1 期，公测前 24 周不断更",
+        examples: ["「如何把电路系统塞进手机」3 分钟拆解", "「Mobile 建造手感调参」幕后", "「PC 玩家骂我们，我们改了什么」复盘"],
+        kpi: "Discord 发言量 · X 互动率 > 8%",
+        accent: "#3fb950"
+      },
+      {
+        name: "玩家故事 UGC 征集",
+        desc: "征集 Rust 服务器的「社会实验」故事，官方剪辑放大。Rust 最值钱的资产=玩家故事",
+        formats: ["UGC 合集短视频", "玩家访谈图文", "Welyn 式电影化叙事"],
+        cadence: "每月 1 次主题征集 + 每周 UGC 精选集锦",
+        examples: ["#MyRustStory 征集", "「我的基地被抄家 10 次」系列", "月度「最离谱外交事件」盘点"],
+        kpi: "UGC 参与量 · TikTok/Reels 播放 · 原作者涨粉"
+      },
+      {
+        name: "赛季社区活动",
+        desc: "绑定 Wipe 月度重置节奏，做「全员同起跑线」仪式感，Mobile 端同步 Wipe 制造双端同温",
+        formats: ["Wipe Day 直播", "赛季预热海报", "社区竞赛(最佳基地/最长生存)"],
+        cadence: "每月 1 次 Wipe Day + 每季度 1 次大型活动",
+        examples: ["Wipe Day Twitch Drops 皮肤", "「48 小时裸奔挑战」", "社区建筑大赛"],
+        kpi: "Wipe Day 峰值同时在线 · Drops 领取量"
+      },
+      {
+        name: "KOL / 创作者共创",
+        desc: "Welyn/hJune 等头部创作者不花钱就在产内容。官方要做的是供弹药、给独家、搭桥梁",
+        formats: ["创作者包(素材+未公开截图)", "Pre-release 试玩", "联合直播"],
+        cadence: "每次大版本 + Mobile 关键节点",
+        examples: ["Mobile CBT 独家 Key 给 Top 20 创作者", "「Rust 10 年」纪录片素材包", "创作者 Discord 私群"],
+        kpi: "创作者自发产出条数 · Twitch 观看小时"
+      }
+    ]
+  },
+  // ───────────────── 2. 品牌大素材 ─────────────────
+  brand: {
+    label: "品牌大素材",
+    icon: "🏛️",
+    color: "var(--accent-gold)",
+    positioning: "高投入 · 低频次 · 电影级 · 立势能",
+    target: "YouTube / Steam 商店页 / App Store / 发布会 / 线下展会 / 投放前贴",
+    production: "外部顶级制作公司，单条预算 ¥100-500K，制作周期 8-16 周",
+    frequency: "全周期 3-5 条核心大片 + 2-3 波联动大事件",
+    audience: "全球泛用户 + 投资人 + 行业媒体 + 平台方(Steam/Apple/Google)",
+    pillars: [
+      {
+        name: "核心品牌 TVC",
+        desc: "定义 Rust Mobile「荒野从未如此近」品牌主张的电影级大片，覆盖全周期所有投放前贴",
+        formats: ["60s 电影级 TVC(全平台通投)", "30s 剪辑版", "15s 买量切片"],
+        cadence: "首曝 1 条 · EA 1 条 · 全球公测 1 条 共 3 波",
+        examples: ["「两个世界一个 Rust」双端 TVC", "「从 PC 到口袋」品牌宣言片", "「You vs Everyone」人性博弈概念片"],
+        budget: "¥500K / 条，周期 12-16 周",
+        kpi: "YouTube 自然播放 > 500 万 · 破圈媒体报道 > 50 家",
+        accent: "#f59e0b"
+      },
+      {
+        name: "主视觉 KV 矩阵",
+        desc: "全球统一主 KV + 按区域/渠道/节日衍生系列。Rust 末日美学 + Mobile 设备符号的视觉 DNA",
+        formats: ["全球主 KV(16:9 / 9:16 / 1:1)", "区域版本(东南亚/欧美/拉美)", "节日衍生(春节/万圣/圣诞)"],
+        cadence: "每大节点 1 套主 KV + 月度衍生",
+        examples: ["首曝主 KV「拿着手机的手，屏幕溢出末日」", "EA KV「荒野从未如此近」", "公测 KV「你的基地现在安全吗？」"],
+        budget: "¥150K / 套，含拍摄 + 合成 + 多版本",
+        kpi: "Steam / App Store 商店页 CTR · 媒体素材复用率"
+      },
+      {
+        name: "发布会 & 展会大事件",
+        desc: "Gamescom / TGA / Apple Event / 独立发布会等舞台大事件，一次性拿下行业声量",
+        formats: ["15 分钟舞台 Demo", "媒体试玩舱", "联名快闪装置"],
+        cadence: "全周期 2-3 波大事件",
+        examples: ["Gamescom 2026 Rust Mobile 首曝舞台", "Twitch Rivals 邀请赛", "公测期纽约 / 东京线下快闪"],
+        budget: "¥1-3M / 次 含场地+制作+公关",
+        kpi: "舞台 PR 总曝光 · 展会 Demo 试玩人次"
+      },
+      {
+        name: "IP 联名大企划",
+        desc: "与顶级 IP / 品牌联名，借势扩圈。参考 OTV 服务器事件——现象级营销往往来自联名",
+        formats: ["联名皮肤 + 活动服务器", "联名 TVC", "联合直播"],
+        cadence: "每年 2-3 次大联名",
+        examples: ["与 Twitch 合作 Drops 大赛季", "与 SteelSeries / Razer 外设联名", "与潮牌 / 潮玩跨界(末日美学契合)"],
+        budget: "¥500K-2M / 次",
+        kpi: "联名期 DAU 同比 · 破圈媒体覆盖"
+      }
+    ]
+  },
+  // ───────────────── 3. UA 买量素材 ─────────────────
+  ua: {
+    label: "UA 买量素材",
+    icon: "📈",
+    color: "var(--accent-cyan)",
+    positioning: "批量 · 高频测试 · A/B 淘汰 · 拿 ROAS",
+    target: "Meta(FB/IG/Reels) · Google/YouTube · TikTok Ads · AppLovin · Unity Ads · 国内巨量/腾讯广告",
+    production: "内部 + 外包素材工厂 + AIGC 批量生产，单条成本 ¥500-3K",
+    frequency: "全周期累计 500-1000 条素材，每周新增 30-50 条，保持迭代",
+    audience: "按买量分层：硬核生存 / 泛生存 / 吃鸡流失 / MC 生存 / 社交向",
+    pillars: [
+      {
+        name: "卖点分层测试素材",
+        desc: "按 Rust 三大卖点分层并行产出，找到不同人群最敏感的钩子",
+        formats: ["15s 竖版视频", "6s 开场钩子", "可玩广告 Playable"],
+        cadence: "每周 30+ 条上新，每 3 天淘汰 ROAS 末位 20%",
+        examples: ["硬核线：完整 Rust 体验 + 电路建造展示", "泛用户线：比吃鸡更自由 + 1v1 PvP 爽感", "社交线：和朋友建家被抄家 + 背叛反转剧情"],
+        kpi: "CPI < ¥8 (东南亚) / ¥25 (美日韩) · D7 ROAS > 15%",
+        accent: "#22d3ee"
+      },
+      {
+        name: "开场 3 秒钩子素材",
+        desc: "买量素材生死线在前 3 秒。专攻「抓眼球」的开场钩子批量生产",
+        formats: ["剧情反转钩子", "数据震撼钩子", "UGC 真实感钩子"],
+        cadence: "每周 20 条钩子 A/B 测试",
+        examples: ["「我花了 3 天建的基地被偷了」(悬念开场)", "「95% 玩家第一天就死了」(数据)", "手机屏幕裂开露出末日世界(视觉钩子)"],
+        kpi: "3s 完播率 > 40% · CTR > 2.5%"
+      },
+      {
+        name: "UGC 风格买量切片",
+        desc: "从社群 UGC 二次剪辑成买量素材——真实感碾压棚拍广告，成本极低 ROAS 极高",
+        formats: ["UGC 反应视频(第一视角被抄家)", "「素人」测评伪纪录", "TikTok 原生感短视频"],
+        cadence: "每周 15-20 条 UGC 切片",
+        examples: ["玩家被背叛的真实录屏", "Welyn 风格叙事剪辑", "「我 60 岁老爸玩 Rust」类跨圈"],
+        kpi: "UGC 切片 CPI 较精致素材低 40% · 3s 完播 > 50%"
+      },
+      {
+        name: "区域 & 节日定制素材",
+        desc: "按投放区域 / 本地节日 / 热点事件做本地化定制，用文化符号拉低 CPI",
+        formats: ["本地语言配音版", "本地热点梗改编", "节日主题素材"],
+        cadence: "每大节日前 2-4 周定制一波",
+        examples: ["东南亚：开斋节/排灯节基地主题", "美区：万圣节恐怖基地/感恩节猎火鸡", "日区：动漫风格 Mobile 角色素材"],
+        kpi: "本地化素材 CPI 较通用低 25% · CVR 提升 30%"
+      },
+      {
+        name: "可玩广告 Playable Ads",
+        desc: "高价值买量渠道杀手锏，尤其 Mobile 端。用户不下载先玩 30 秒",
+        formats: ["建造体验 Playable(60s)", "PvP 对枪 Playable", "抄家反抄家 Playable"],
+        cadence: "全周期 6-10 款 Playable 迭代",
+        examples: ["30 秒速造小木屋 Playable", "1v1 对枪 Playable(展示操控)", "抄家逃生 Playable(展示紧张感)"],
+        kpi: "Playable CVR 较视频高 2-3 倍 · AppLovin / Unity 买量 ROAS 最优"
+      }
+    ]
+  },
+  // ───────────────── 三类素材协同机制 ─────────────────
+  synergy: [
+    { from:"运营社群", to:"品牌大素材", mechanism:"社群 UGC 里的真实故事 → 品牌 TVC 叙事源头(Welyn 式故事)" },
+    { from:"运营社群", to:"UA 买量", mechanism:"社群 UGC 二次剪辑 → 真实感买量切片，CPI 降 40%" },
+    { from:"品牌大素材", to:"UA 买量", mechanism:"品牌 TVC 拆解 → 15s/6s 买量切片，复用省 70% 制作成本" },
+    { from:"品牌大素材", to:"运营社群", mechanism:"TVC / KV 首发优先给社群 → 培养荣誉感+带动创作者共创" },
+    { from:"UA 买量", to:"品牌大素材", mechanism:"买量测试跑出的最强钩子和卖点 → 反哺下一波品牌 TVC 叙事" },
+    { from:"UA 买量", to:"运营社群", mechanism:"买量洗进来的新玩家 → 引导进 Discord 社群沉淀核心池" }
+  ]
+};
+

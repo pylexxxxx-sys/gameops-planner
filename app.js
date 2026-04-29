@@ -1179,6 +1179,7 @@ function renderAnalysis() {
   renderDiffPositioning();
   renderRegionalStrategy();
   renderAudienceSegmentation();
+  renderAssetPlan();
 }
 
 function renderBrandHouse() {
@@ -1488,6 +1489,97 @@ function renderAudienceSegmentation() {
       </div>
     </div>
   `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ASSET PLAN — 三大类素材规划 (社群 / 品牌 / UA)
+// ═══════════════════════════════════════════════════════════════
+function renderAssetPlan() {
+  const ap = currentProjectType === 'rust' ? (typeof RUST_ASSET_PLAN!=='undefined'?RUST_ASSET_PLAN:null)
+           : currentProjectType === 'hunt' ? (typeof HUNT_ASSET_PLAN!=='undefined'?HUNT_ASSET_PLAN:null)
+           : (typeof POE2_ASSET_PLAN!=='undefined'?POE2_ASSET_PLAN:null);
+  const section = document.getElementById('sectionAssetPlan');
+  const ovEl = document.getElementById('assetPlanOverview');
+  const catEl = document.getElementById('assetPlanCategories');
+  const synEl = document.getElementById('assetPlanSynergy');
+  if (!section) return;
+  if (!ap) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+
+  ovEl.innerHTML = `
+    <div class="asset-overview">
+      <div class="asset-overview-row">
+        <div class="asset-ov-cell"><span class="asset-ov-key">🎯 目标</span><span class="asset-ov-val">${ap.overview.goal}</span></div>
+        <div class="asset-ov-cell"><span class="asset-ov-key">🧭 原则</span><span class="asset-ov-val">${ap.overview.principle}</span></div>
+      </div>
+      <div class="asset-overview-row">
+        <div class="asset-ov-cell"><span class="asset-ov-key">⚖️ 投入配比</span><span class="asset-ov-val">${ap.overview.ratio}</span></div>
+        <div class="asset-ov-cell"><span class="asset-ov-key">📊 KPI 导向</span><span class="asset-ov-val">${ap.overview.kpi}</span></div>
+      </div>
+    </div>
+  `;
+
+  const categories = [ap.community, ap.brand, ap.ua];
+  catEl.innerHTML = categories.map(cat => `
+    <div class="asset-category" style="border-left:4px solid ${cat.color};">
+      <div class="asset-cat-header">
+        <div class="asset-cat-icon" style="background:${cat.color}22;color:${cat.color};">${cat.icon}</div>
+        <div class="asset-cat-title-block">
+          <h3 class="asset-cat-title" style="color:${cat.color};">${cat.label}</h3>
+          <div class="asset-cat-positioning">${cat.positioning}</div>
+        </div>
+      </div>
+      <div class="asset-cat-meta">
+        <div class="asset-meta-item"><span class="m-key">📍 投放渠道</span><span class="m-val">${cat.target}</span></div>
+        <div class="asset-meta-item"><span class="m-key">🏭 生产方式</span><span class="m-val">${cat.production}</span></div>
+        <div class="asset-meta-item"><span class="m-key">🔁 产出频次</span><span class="m-val">${cat.frequency}</span></div>
+        <div class="asset-meta-item"><span class="m-key">👥 目标人群</span><span class="m-val">${cat.audience}</span></div>
+      </div>
+      <div class="asset-pillars">
+        ${cat.pillars.map((p,i) => `
+          <div class="asset-pillar-card" style="border-top:3px solid ${p.accent || cat.color};">
+            <div class="asset-pillar-head">
+              <div class="asset-pillar-num" style="background:${cat.color};">${i+1}</div>
+              <div class="asset-pillar-name">${p.name}</div>
+            </div>
+            <div class="asset-pillar-desc">${p.desc}</div>
+            <div class="asset-pillar-rows">
+              <div class="asset-pillar-row"><span class="pr-k">形式</span><span class="pr-v">${p.formats.map(f=>`<span class="chip">${f}</span>`).join('')}</span></div>
+              <div class="asset-pillar-row"><span class="pr-k">节奏</span><span class="pr-v">${p.cadence}</span></div>
+              ${p.budget ? `<div class="asset-pillar-row"><span class="pr-k">预算</span><span class="pr-v" style="color:var(--accent-gold);font-weight:700;">${p.budget}</span></div>` : ''}
+              <div class="asset-pillar-row"><span class="pr-k">例子</span><span class="pr-v"><ul class="asset-ex-list">${p.examples.map(e=>`<li>${e}</li>`).join('')}</ul></span></div>
+              <div class="asset-pillar-row"><span class="pr-k">KPI</span><span class="pr-v" style="color:var(--accent-cyan);font-weight:600;">${p.kpi}</span></div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  if (ap.synergy && ap.synergy.length) {
+    synEl.innerHTML = `
+      <div class="asset-synergy-card">
+        <div class="asset-synergy-title">🔄 三类素材协同机制 — 互为原料，不重复生产</div>
+        <div class="asset-synergy-grid">
+          ${ap.synergy.map(s => `
+            <div class="asset-synergy-item">
+              <div class="asset-synergy-flow">
+                <span class="asset-synergy-from">${s.from}</span>
+                <span class="asset-synergy-arrow">→</span>
+                <span class="asset-synergy-to">${s.to}</span>
+              </div>
+              <div class="asset-synergy-mech">${s.mechanism}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    synEl.innerHTML = '';
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
